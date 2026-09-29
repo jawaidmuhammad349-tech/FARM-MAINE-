@@ -25,7 +25,7 @@ export function Header() {
     <header className="site-header">
       <div className="container header-inner">
         <Link href="/" className="brand" aria-label={`${site.name} home`}>
-          <Image src="/images/crest.png" alt="" width={46} height={46} className="brand-logo" priority />
+          <Image src="/images/emblem.png" alt="" width={103} height={130} className="brand-logo" priority />
           <span className="brand-name">{site.name}</span>
         </Link>
 

@@ -54,8 +54,19 @@ The live site has no per-product descriptions, so the six charcuterie descriptio
 ### Images
 
 Photos are resized copies (max 1600px) of the originals on the live site, stored in `public/images/` and
-mapped to slots in `src/lib/images.ts`. The site icon (`src/app/icon.png`) and header crest are cropped from
-the farm's logo (`public/images/logo.png`).
+mapped to slots in `src/lib/images.ts`.
+
+### Logo
+
+Full-size masters are in `brand/`: the original logo (`logo-original.jpg`) and a transparent cut-out
+(`logo-transparent.png`). Derived from them:
+
+- `public/images/logo.png`: full logo, shown in the footer
+- `public/images/emblem.png`: framed pig and banner without the lettering, shown in the header
+- `src/app/icon.png`, `src/app/apple-icon.png`: browser tab and home-screen icons (round pig portrait)
+- `src/app/opengraph-image.jpg`: preview image shown when a link is shared
+
+The lettering is dark brown, so use the full logo on light backgrounds only.
 
 - The live site has only three charcuterie photos. Lonza, coppa and culatello use them (the cut shown in each
   is a best guess, please confirm). Salami, guanciale and pancetta use pig photos until product photos exist.

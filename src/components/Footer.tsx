@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { nav, site } from "@/lib/site";
 
@@ -5,8 +6,10 @@ export function Footer() {
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
-        <div>
-          <p className="footer-brand">{site.name}</p>
+        <div className="footer-about">
+          <div className="footer-logo">
+            <Image src="/images/logo.png" alt={`${site.name}, Buckfield, Maine`} width={480} height={717} sizes="120px" />
+          </div>
           <p>{site.tagline}</p>
           <p>{site.address}</p>
         </div>
