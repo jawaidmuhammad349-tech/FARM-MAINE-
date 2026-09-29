@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://brickhousefarmmaine.com"),
   title: { default: `${site.name} | ${site.tagline}`, template: `%s | ${site.name}` },
   description:
-    "Brickhouse Farm is a small regenerative family farm in Maine raising Mangalitsa pork and grass-fed beef, and crafting charcuterie by hand.",
+    "Discover our artisanal charcuterie, made from our pasture raised meats using classic Italian traditions. Experience the farm-to-table difference at Brickhouse Farm in Buckfield, Maine.",
 };
 
 export const viewport: Viewport = { themeColor: "#f6efe4" };

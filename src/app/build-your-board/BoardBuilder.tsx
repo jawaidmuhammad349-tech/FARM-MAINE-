@@ -137,7 +137,7 @@ export function BoardBuilder() {
                   </label>
                 ))}
               </div>
-              <p className="placeholder-note">Board sizes and pricing are placeholders pending confirmation.</p>
+              <p className="placeholder-note">Board size pricing is a placeholder pending confirmation.</p>
             </>
           )}
 
@@ -204,8 +204,10 @@ export function BoardBuilder() {
                 {addOns.map((a) => (
                   <label key={a.id} className={`option${sel.addOns.includes(a.id) ? " selected" : ""}`}>
                     <input type="checkbox" checked={sel.addOns.includes(a.id)} onChange={() => toggleAddOn(a.id)} />
-                    <span className="option-title">{a.name}</span>
-                    <span className="option-meta">+{formatPrice(a.price)}</span>
+                    <span className="option-title">
+                      {a.name} · +{formatPrice(a.price)}
+                    </span>
+                    <span className="option-meta">{a.note}</span>
                   </label>
                 ))}
               </div>

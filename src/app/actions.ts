@@ -3,6 +3,7 @@
 import { boardBreakdown, describeBoard, formatPrice, fulfillmentOptions, getProduct, normalizeSelection } from "@/lib/catalog";
 import type { CartItem } from "@/lib/cart-types";
 import { sendMail } from "@/lib/mail";
+import { pickupLocations } from "@/lib/site";
 
 export type FormState = { ok: boolean; message: string; errors?: Record<string, string> };
 
@@ -31,6 +32,8 @@ export async function submitOrder(_prev: FormState, fd: FormData): Promise<FormS
   const errors = requireFields(fd, ["name", "email", "fulfillment"]);
   const fulfillment = fulfillmentOptions.find((f) => f.id === str(fd, "fulfillment"));
   if (fulfillment?.id === "ship" && !str(fd, "address")) errors.address = "Required for shipping";
+  if (fulfillment?.id === "pickup" && !pickupLocations.includes(str(fd, "pickupLocation")))
+    errors.pickupLocation = "Choose a pickup location";
 
   let items: CartItem[] = [];
   try {
@@ -66,7 +69,7 @@ export async function submitOrder(_prev: FormState, fd: FormData): Promise<FormS
     `Email: ${str(fd, "email")}`,
     `Phone: ${str(fd, "phone") || "—"}`,
     `Fulfillment: ${fulfillment?.label}`,
-    fulfillment?.id === "ship" ? `Address: ${str(fd, "address")}` : "",
+    fulfillment?.id === "ship" ? `Address: ${str(fd, "address")}` : `Pickup location: ${str(fd, "pickupLocation")}`,
     `Preferred date: ${str(fd, "date") || "—"}`,
     "",
     ...lines,

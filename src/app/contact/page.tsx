@@ -1,25 +1,31 @@
 import type { Metadata } from "next";
-import { site } from "@/lib/site";
+import { retailers, site } from "@/lib/site";
 import { ContactForm } from "./ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Brickhouse Farm about orders, charcuterie boards, meat shares or farm visits.",
+  description: "Contact Brickhouse Farm in Buckfield, Maine about orders, charcuterie boards, weddings or meat shares.",
 };
+
+// Wording from brickhousefarmmaine.com.
 
 export default function Contact() {
   return (
     <>
       <section className="page-hero">
         <div className="container">
-          <p className="eyebrow">Contact</p>
-          <h1>We&rsquo;d love to hear from you</h1>
-          <p className="lead">Questions about an order, a custom board or a beef share? Send us a note.</p>
+          <p className="eyebrow">Contact us</p>
+          <h1>Ask questions or just say hello!</h1>
+          <p className="lead">
+            We love to hear from you about what you&rsquo;re cooking and how you&rsquo;re doing. Email or call us, and
+            we will get back to you soon.
+          </p>
         </div>
       </section>
       <section className="section" style={{ paddingTop: "1.5rem" }}>
         <div className="container split" style={{ alignItems: "start" }}>
           <div className="card">
+            <h2 style={{ fontSize: "1.6rem" }}>Drop us a line</h2>
             <ContactForm />
           </div>
           <ul className="contact-list">
@@ -33,11 +39,17 @@ export default function Contact() {
             </li>
             <li>
               <strong>Farm</strong>
-              {site.location}
+              {site.address}
+              <br />
+              <a href={site.directions}>Get directions</a>
             </li>
             <li>
-              <strong>Pickup</strong>
-              Farm pickup by arrangement — we&rsquo;ll confirm a time with your order.
+              <strong>Find our meats at</strong>
+              {retailers.join(" · ")}
+            </li>
+            <li>
+              <strong>Follow along</strong>
+              <a href={site.facebook}>Facebook</a>
             </li>
           </ul>
         </div>

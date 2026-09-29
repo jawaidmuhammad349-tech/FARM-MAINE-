@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -24,9 +25,7 @@ export function Header() {
     <header className="site-header">
       <div className="container header-inner">
         <Link href="/" className="brand" aria-label={`${site.name} home`}>
-          <span className="brand-mark" aria-hidden>
-            BF
-          </span>
+          <Image src="/images/crest.png" alt="" width={46} height={46} className="brand-logo" priority />
           <span className="brand-name">{site.name}</span>
         </Link>
 

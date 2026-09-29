@@ -97,29 +97,30 @@ export const EXTRA_CHEESE_PRICE = 16;
 
 export type BoardSize = { id: string; name: string; serves: string; surcharge: number };
 
-// PLACEHOLDER: board size pricing to be confirmed by the farm.
+// Serving sizes are from the farm's holiday boards.
+// PLACEHOLDER: size surcharges to be confirmed by the farm.
 export const boardSizes: BoardSize[] = [
-  { id: "small", name: "Small", serves: "Serves 2–4", surcharge: 0 },
-  { id: "medium", name: "Medium", serves: "Serves 4–6", surcharge: 15 },
-  { id: "large", name: "Large", serves: "Serves 6–10", surcharge: 30 },
+  { id: "small", name: "Small", serves: "Serves 3–5", surcharge: 0 },
+  { id: "medium", name: "Medium", serves: "Serves 6–10", surcharge: 15 },
+  { id: "large", name: "Large", serves: "Serves 11–16", surcharge: 30 },
 ];
 
 export type Cheese = { id: string; name: string; note: string };
 
-// PLACEHOLDER: cheese list to be confirmed by the farm.
+// PLACEHOLDER: cheese list to be confirmed by the farm. These are the
+// creameries the farm partnered with for its holiday boards.
 export const cheeses: Cheese[] = [
-  { id: "cheese-1", name: "Aged Cheddar", note: "Sharp and crumbly" },
-  { id: "cheese-2", name: "Soft Bloomy Rind", note: "Creamy and buttery" },
-  { id: "cheese-3", name: "Blue Cheese", note: "Bold and tangy" },
-  { id: "cheese-4", name: "Fresh Chèvre", note: "Bright and mild" },
+  { id: "crooked-face", name: "Crooked Face Creamery", note: "Small-batch Maine cheese made with local ingredients" },
+  { id: "marieke-gouda", name: "Marieke Gouda", note: "Farmstead raw milk gouda in the traditional Dutch style" },
+  { id: "sartori-bellavitano", name: "Sartori BellaVitano", note: "Award-winning Wisconsin artisan cheese" },
 ];
 
-export type AddOn = { id: string; name: string; price: number };
+export type AddOn = { id: string; name: string; price: number; note: string };
 
 export const addOns: AddOn[] = [
-  { id: "compote", name: "Compote", price: 12 },
-  { id: "honey", name: "Honey", price: 12 },
-  { id: "almonds", name: "Almonds", price: 10 },
+  { id: "compote", name: "Compote", price: 12, note: "Seasonal fruit spread" },
+  { id: "honey", name: "Honey", price: 12, note: "Raw, unfiltered Maine honey from Tony's Honey in Buckfield" },
+  { id: "almonds", name: "Almonds", price: 10, note: "Organic sprouted almonds from Living Nutz" },
 ];
 
 export type BoardSelection = {
@@ -190,7 +191,7 @@ export function describeBoard(sel: BoardSelection) {
 export const SHIPPING_FLAT_RATE = 15;
 
 export const fulfillmentOptions = [
-  { id: "pickup", label: "Pick up at the farm", cost: 0 },
+  { id: "pickup", label: "Pick up", cost: 0 },
   { id: "ship", label: "Ship to me (placeholder rate)", cost: SHIPPING_FLAT_RATE },
 ] as const;
 

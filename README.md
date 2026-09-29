@@ -42,26 +42,33 @@ Email is sent through [Resend](https://resend.com) when these environment variab
 
 Without them, messages are printed to the server console, so everything still works locally.
 
-## Content to finish
+## Content
+
+Text and photos come from brickhousefarmmaine.com: Amie's "Who We Are", mission and Mangalitsa text, the
+holiday board details (serving sizes, artisan partners, packaging notes, pickup locations), the weddings page
+and the contact details. Wording has only been lightly edited for clarity (typos, punctuation).
+
+The live site has no per-product descriptions, so the six charcuterie descriptions and pairing notes in
+`src/lib/catalog.ts` are new and should be reviewed by the farm.
 
 ### Images
 
-Photos are defined in `src/lib/images.ts`. Each slot shows a labelled placeholder until you add the file.
-To fill one in, save the photo from the current site to `public/images/` using the file name shown on
-the placeholder (e.g. `hero.jpg`), then set `src: "/images/hero.jpg"` for that slot.
+Photos are resized copies (max 1600px) of the originals on the live site, stored in `public/images/` and
+mapped to slots in `src/lib/images.ts`. The site icon (`src/app/icon.png`) and header crest are cropped from
+the farm's logo (`public/images/logo.png`).
+
+- The live site has only three charcuterie photos. Lonza, coppa and culatello use them (the cut shown in each
+  is a best guess, please confirm). Salami, guanciale and pancetta use pig photos until product photos exist.
+- The artisan partner photos on the live site (screenshots of other businesses and a Google Images result)
+  were not copied.
 
 ### Placeholders awaiting confirmation from the farm
 
-- **Cheese list**: `cheeses` in `src/lib/catalog.ts`
+- **Cheese list**: `cheeses` in `src/lib/catalog.ts` (currently the three creameries from the holiday boards)
 - **Board size pricing**: `boardSizes` in `src/lib/catalog.ts` (currently Small +$0, Medium +$15, Large +$30)
-- **Shipping cost**: `SHIPPING_FLAT_RATE` in `src/lib/catalog.ts` (currently $15; farm pickup is free)
+- **Shipping cost**: `SHIPPING_FLAT_RATE` in `src/lib/catalog.ts` (currently $15). Note the live site says
+  boards are pickup only, with no shipping.
 - **Beef share details** (weights, price per lb, deposit, timing): `src/app/meat-shares/page.tsx`
-- **Contact details** (email, phone, town, social links): `src/lib/site.ts`
-
-### Copy
-
-Page text is written to match the scope of work. Where Amie's wording on the live site differs, use hers.
-The text is in each page's `page.tsx` and the product descriptions are in `src/lib/catalog.ts`.
 
 ## Pricing rules (Build Your Own Board)
 

@@ -208,17 +208,9 @@ img {
   color: var(--bark);
   text-decoration: none;
 }
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: var(--brick);
-  color: var(--cream);
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1rem;
+.brand-logo {
+  width: 46px;
+  height: 46px;
 }
 .brand-name {
   font-family: var(--font-display);
@@ -486,7 +478,9 @@ img {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgb(33 22 14 / 0.85), rgb(33 22 14 / 0.25) 60%, rgb(33 22 14 / 0.1));
+  background:
+    linear-gradient(to top, rgb(33 22 14 / 0.85), rgb(33 22 14 / 0.45) 55%, rgb(33 22 14 / 0.3)),
+    linear-gradient(to right, rgb(33 22 14 / 0.45), transparent 70%);
 }
 .hero-content {
   position: relative;
@@ -496,6 +490,10 @@ img {
 }
 .hero h1 {
   max-width: 14ch;
+}
+.hero h1,
+.hero p {
+  text-shadow: 0 1px 12px rgb(33 22 14 / 0.45);
 }
 .hero .lead {
   color: var(--linen);
@@ -562,7 +560,16 @@ img {
 .product-grid {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+}
+@media (min-width: 600px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 .product-card {
   display: flex;
@@ -1130,4 +1137,67 @@ fieldset {
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--sage);
+}
+
+.mission {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 500;
+  font-style: italic;
+}
+.retailers {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: grid;
+  gap: 0.5rem;
+}
+.retailers li {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  padding-left: 1.4rem;
+  position: relative;
+}
+.retailers li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--brick);
+}
+.gallery {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 720px) {
+  .gallery {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+.gallery .photo {
+  aspect-ratio: 3 / 4;
+}
+.partner-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+}
+.partner {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.4rem;
+}
+.partner h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.3rem;
+}
+.partner p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--bark-soft);
 }

@@ -7,6 +7,7 @@ import { itemPrice, useCart } from "@/components/CartProvider";
 import { Field } from "@/components/Field";
 import { Photo } from "@/components/Photo";
 import { describeBoard, formatPrice, fulfillmentOptions, getProduct } from "@/lib/catalog";
+import { pickupLocations } from "@/lib/site";
 
 const initial: FormState = { ok: false, message: "" };
 
@@ -97,7 +98,7 @@ export function CartView() {
             <span>{formatPrice(subtotal)}</span>
           </li>
           <li>
-            <span>{fulfillment === "ship" ? "Shipping (placeholder)" : "Farm pickup"}</span>
+            <span>{fulfillment === "ship" ? "Shipping (placeholder)" : "Pickup"}</span>
             <span>{shipping ? formatPrice(shipping) : "Free"}</span>
           </li>
           <li className="grand">
@@ -140,6 +141,18 @@ export function CartView() {
               ))}
             </div>
           </fieldset>
+          {fulfillment === "pickup" && (
+            <Field label="Pickup location" name="pickupLocation" required error={state.errors?.pickupLocation}>
+              <option value="" disabled>
+                Choose a location
+              </option>
+              {pickupLocations.map((l) => (
+                <option key={l} value={l}>
+                  {l}
+                </option>
+              ))}
+            </Field>
+          )}
           {fulfillment === "ship" && (
             <Field label="Shipping address" name="address" textarea required error={state.errors?.address} />
           )}

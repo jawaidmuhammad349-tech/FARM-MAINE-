@@ -25,7 +25,7 @@ export default function MeatShares() {
 
       <section className="section" style={{ paddingTop: "1.5rem" }}>
         <div className="container split">
-          <Photo name="cattle" className="ratio-4x3" sizes="(min-width: 860px) 50vw, 100vw" />
+          <Photo name="highlandCow" className="ratio-4x3" sizes="(min-width: 860px) 50vw, 100vw" />
           <div className="share-grid">
             <div className="share-card">
               <h3>Whole cow</h3>

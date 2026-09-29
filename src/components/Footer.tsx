@@ -8,7 +8,7 @@ export function Footer() {
         <div>
           <p className="footer-brand">{site.name}</p>
           <p>{site.tagline}</p>
-          <p>{site.location}</p>
+          <p>{site.address}</p>
         </div>
         <nav aria-label="Footer">
           <ul>
@@ -26,16 +26,9 @@ export function Footer() {
           <p>
             <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`}>{site.phone}</a>
           </p>
-          {site.instagram && (
-            <p>
-              <a href={site.instagram}>Instagram</a>
-            </p>
-          )}
-          {site.facebook && (
-            <p>
-              <a href={site.facebook}>Facebook</a>
-            </p>
-          )}
+          <p>
+            <a href={site.facebook}>Facebook</a>
+          </p>
         </div>
       </div>
       <div className="container footer-bottom">

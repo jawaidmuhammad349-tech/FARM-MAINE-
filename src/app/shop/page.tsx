@@ -16,7 +16,8 @@ export default function Shop() {
           <p className="eyebrow">Shop</p>
           <h1>Charcuterie</h1>
           <p className="lead">
-            Cured by hand in small batches from our own pasture-raised Mangalitsa pork. Every cut is $20.
+            We cure our pasture-raised, USDA certified Mangalitsa pork using traditional Italian methods passed down
+            through generations. Every cut is $20.
           </p>
         </div>
       </section>

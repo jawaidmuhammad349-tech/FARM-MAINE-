@@ -1,15 +1,19 @@
-// Site-wide details. PLACEHOLDER values should be replaced with the farm's
-// real contact details (copy them from brickhousefarmmaine.com).
+// Site-wide details, taken from brickhousefarmmaine.com.
 
 export const site = {
   name: "Brickhouse Farm",
-  tagline: "Regenerative family farm in Maine",
-  email: "hello@brickhousefarmmaine.com", // PLACEHOLDER
-  phone: "(207) 555-0100", // PLACEHOLDER
-  location: "Maine", // PLACEHOLDER: town / pickup address
-  instagram: "", // PLACEHOLDER: e.g. https://instagram.com/...
-  facebook: "", // PLACEHOLDER
+  tagline: "Pasture raised meats and handmade artisanal charcuterie",
+  email: "amie@brickhousefarmmaine.com",
+  phone: "(207) 400-2466",
+  address: "415 Paris Hill Road, Buckfield, Maine 04220",
+  town: "Buckfield, Maine",
+  facebook: "https://www.facebook.com/442421498958526",
+  directions: "https://www.google.com/maps/search/?api=1&query=415+Paris+Hill+Road+Buckfield+Maine+04220",
 };
+
+export const retailers = ["Lewiston Farmers Market", "Monte's Fine Foods", "Mancini's Italian Deli"];
+
+export const pickupLocations = ["The farm in Buckfield", "Portland", "Lewiston", "Augusta"];
 
 export const nav = [
   { href: "/", label: "Home" },

@@ -45,7 +45,11 @@ export default async function ProductPage({ params }: PageProps<"/shop/[slug]">)
             </div>
             <AddToCart slug={product.slug} withQty />
             <p className="muted small" style={{ marginTop: "1.25rem" }}>
-              Made from our pasture-raised Mangalitsa pork. Keep refrigerated.
+              Made from our pasture-raised Mangalitsa pork.{" "}
+              {product.slug === "salami"
+                ? "No preservatives; contains only trace amounts of nitrate."
+                : "No preservatives or nitrates."}{" "}
+              Keep refrigerated.
             </p>
           </div>
         </div>
