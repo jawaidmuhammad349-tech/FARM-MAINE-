@@ -17,9 +17,9 @@ export const pickupLocations = ["The farm in Buckfield", "Portland", "Lewiston",
 
 export const nav = [
   { href: "/", label: "Home" },
-  { href: "/our-farm", label: "Our Farm" },
+  { href: "/build-your-board", label: "Charcuterie Boards" },
   { href: "/shop", label: "Shop Charcuterie" },
-  { href: "/build-your-board", label: "Build Your Board" },
   { href: "/meat-shares", label: "Meat Shares" },
+  { href: "/our-farm", label: "Our Farm" },
   { href: "/contact", label: "Contact" },
 ];

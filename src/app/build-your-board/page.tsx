@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Photo } from "@/components/Photo";
 import { BoardBuilder } from "./BoardBuilder";
 
 export const metadata: Metadata = {
-  title: "Build Your Own Board",
+  title: "Charcuterie Boards",
   description:
-    "Build a custom charcuterie board with Brickhouse Farm's Mangalitsa charcuterie, local cheeses, raw honey and sprouted nuts. Boards start at $50.",
+    "Build a charcuterie board starting with Brickhouse Farm coppa, salami and cheese for $50, then add more meats, cheese, honey, almonds and fruit spreads.",
 };
 
 // Wording from brickhousefarmmaine.com, lightly edited for clarity.
@@ -42,14 +41,16 @@ export default function BuildYourBoard() {
   return (
     <>
       <section className="page-hero">
-        <div className="container">
-          <p className="eyebrow">Build Your Own Board</p>
-          <h1>Your board, your way</h1>
-          <p className="lead">
-            Each board features our handcrafted meats paired with hand-selected cheeses, raw honey, sprouted nuts and
-            seasonal fruit spreads — a celebration of slow food, craftsmanship and community. Start with a $50 board with
-            two meats and one cheese, then make it your own.
-          </p>
+        <div className="container split">
+          <div>
+            <p className="eyebrow">Charcuterie Boards</p>
+            <h1>Build your own board</h1>
+            <p className="lead">
+              Every board starts with our coppa, salami and a cheese of your choice for $50. Then add whatever else you
+              like: more of our handcrafted meats, extra cheese, raw honey, sprouted almonds and seasonal fruit spreads.
+            </p>
+          </div>
+          <Photo name="board" className="ratio-4x3" priority sizes="(min-width: 860px) 50vw, 100vw" />
         </div>
       </section>
 
@@ -74,7 +75,7 @@ export default function BuildYourBoard() {
             </p>
             <p>Supply is limited — once we sell out, we&rsquo;re out.</p>
           </div>
-          <Photo name="board" className="ratio-4x3" sizes="(min-width: 860px) 50vw, 100vw" />
+          <Photo name="sliced" className="ratio-4x3" sizes="(min-width: 860px) 50vw, 100vw" />
         </div>
       </section>
 
@@ -99,38 +100,6 @@ export default function BuildYourBoard() {
         </div>
       </section>
 
-      <section className="section section-alt" id="weddings">
-        <div className="container split reverse">
-          <Photo name="wedding" className="ratio-3x4" sizes="(min-width: 860px) 50vw, 100vw" />
-          <div className="prose">
-            <p className="eyebrow">Weddings &amp; formal occasions</p>
-            <h2>Wedding charcuterie boards</h2>
-            <p>
-              We create bespoke charcuterie experiences for weddings, bridal and groom suites, rehearsal gatherings and
-              private celebrations that value beauty, craftsmanship and exceptional ingredients.
-            </p>
-            <p>
-              Our boards are composed using traditionally cured meats made from our pasture raised Mangalitsas, paired
-              with carefully sourced artisanal cheeses and accompaniments selected for balance, seasonality and
-              elegance.
-            </p>
-            <p>Expect:</p>
-            <ul>
-              <li>Heritage-style cured meats from pasture-raised pigs</li>
-              <li>Artisanal cheeses and restrained, purposeful pairings</li>
-              <li>House-made fruit preserves, local honey, organic sourdough and premium accompaniments</li>
-              <li>Clean, abundant presentation with an editorial sensibility</li>
-            </ul>
-            <p>
-              We offer custom sizing and tailored selections. Every board is crafted with the same care as the
-              celebration it serves — quietly luxurious, deeply rooted, and meant to be remembered.
-            </p>
-            <Link href="/contact" className="btn btn-primary">
-              Ask about your event
-            </Link>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

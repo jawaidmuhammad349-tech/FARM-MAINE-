@@ -17,7 +17,7 @@ export default function Shop() {
           <h1>Charcuterie</h1>
           <p className="lead">
             We cure our pasture-raised, USDA certified Mangalitsa pork using traditional Italian methods passed down
-            through generations. Every cut is $20.
+            through generations.
           </p>
         </div>
       </section>

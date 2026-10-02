@@ -17,7 +17,7 @@ type CartContextValue = {
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
-const STORAGE_KEY = "brickhouse-cart";
+const STORAGE_KEY = "brickhouse-cart-v2";
 
 export function itemPrice(item: CartItem) {
   if (item.kind === "product") return getProduct(item.slug)?.price ?? 0;

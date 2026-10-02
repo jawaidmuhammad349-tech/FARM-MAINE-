@@ -4,7 +4,7 @@ import { ContactForm } from "./ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Contact Brickhouse Farm in Buckfield, Maine about orders, charcuterie boards, weddings or meat shares.",
+  description: "Contact Brickhouse Farm in Buckfield, Maine about charcuterie boards, orders or meat shares.",
 };
 
 // Wording from brickhousefarmmaine.com.

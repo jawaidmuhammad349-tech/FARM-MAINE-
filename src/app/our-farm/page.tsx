@@ -61,10 +61,6 @@ export default function OurFarm() {
               We work with other local farmers and feed our pigs seasonal delights such as apples, pumpkins, raw milk,
               squashes and tomatoes. We never feed them junk food or anything processed — they truly are fancy pigs!
             </p>
-            <p>
-              You can find our meats at the Lewiston Farmers Market, Monte&rsquo;s Fine Foods and Mancini&rsquo;s
-              Italian Deli.
-            </p>
           </div>
         </div>
       </section>
@@ -102,7 +98,7 @@ export default function OurFarm() {
 
       <section className="section section-alt">
         <div className="container split reverse">
-          <Photo name="coppa" className="ratio-4x3" sizes="(min-width: 860px) 50vw, 100vw" />
+          <Photo name="curing" className="ratio-4x3" sizes="(min-width: 860px) 50vw, 100vw" />
           <div>
             <p className="eyebrow">USDA certified</p>
             <h2>Cured the traditional way</h2>
@@ -130,7 +126,7 @@ export default function OurFarm() {
         <div className="container">
           <div className="section-head">
             <p className="eyebrow">Life on the farm</p>
-            <h2>Meet the neighbors</h2>
+            <h2>Meet our animals</h2>
           </div>
           <div className="gallery">
             {gallery.map((name) => (

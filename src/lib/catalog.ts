@@ -14,27 +14,17 @@ export type Product = {
   image: ImageKey;
 };
 
+// Descriptions are from the farm's online store (brickhousefarmmaine.com/products).
 export const products: Product[] = [
-  {
-    slug: "lonza",
-    name: "Lonza",
-    weight: "4 oz",
-    price: 20,
-    short: "Cured Mangalitsa pork loin, lean and delicate.",
-    description:
-      "Lonza is whole pork loin, salted, seasoned and slowly air-dried. Mangalitsa loin carries a ribbon of fat that melts on the tongue, giving a clean, sweet pork flavor.",
-    pairing: "Slice paper-thin. Lovely with melon, fresh cheese or a crisp white wine.",
-    image: "lonza",
-  },
   {
     slug: "coppa",
     name: "Coppa",
     weight: "4 oz",
     price: 20,
-    short: "Well-marbled neck and shoulder, rich and savory.",
+    short: "Marbled neck muscle cured with Maine sea salt, aged 6–7 months.",
     description:
-      "Coppa comes from the neck and shoulder, one of the most marbled cuts on the hog. It is cured whole and dried until it is tender, rich and deeply savory.",
-    pairing: "Serve at room temperature with crusty bread, olives and a medium-bodied red.",
+      "We use an exquisitely marbled neck muscle and Maine sea salt only to achieve the perfect dry-cured coppa. It is aged for 6–7 months to ensure the delicate yet complex flavors are achieved.",
+    pairing: "Paired with a glass of Vermentino and a sourdough baguette — chef's kiss.",
     image: "coppa",
   },
   {
@@ -42,21 +32,31 @@ export const products: Product[] = [
     name: "Salami",
     weight: "6 oz",
     price: 20,
-    short: "Classic dry-cured salami made from our pastured pork.",
+    short: "Handcrafted with old Italian recipes and a wild fermentation.",
     description:
-      "Our salami is ground Mangalitsa pork, seasoned, stuffed and slowly fermented and dried. A crowd favorite and the heart of any board.",
-    pairing: "Cut in thick coins for snacking, or thin for sandwiches. Great with mustard and aged cheese.",
+      "Our premium salami is handcrafted using old Italian traditions and recipes. We use a wild fermentation process to ensure the highest quality.",
+    pairing: "Perfect for any charcuterie board or pizza!",
     image: "salami",
+  },
+  {
+    slug: "lonza",
+    name: "Lonza",
+    weight: "4 oz",
+    price: 20,
+    short: "Cured with Maine sea salt, rolled in red pepper, bay leaf and fennel.",
+    description:
+      "Our lonza is dry cured using Maine sea salt, then rolled in red pepper, bay leaf and fennel, where it is left to age for 5–6 months.",
+    pairing: "Slice paper-thin and serve at room temperature.",
+    image: "lonza",
   },
   {
     slug: "culatello",
     name: "Culatello",
     weight: "4 oz",
     price: 20,
-    short: "The prized heart of the ham, silky and sweet.",
-    description:
-      "Culatello is the most prized part of the rear leg, cured and aged with care. It is silky, sweet and complex — a true specialty.",
-    pairing: "Enjoy on its own, sliced as thin as you can, with a glass of sparkling wine.",
+    short: "Boneless prosciutto: Mangalitsa ham cured in Maine sea salt for 12 months.",
+    description: "Culatello is a boneless prosciutto: Mangalitsa ham dry cured in Maine sea salt for 12 months.",
+    pairing: "Enjoy on its own, sliced as thin as you can.",
     image: "culatello",
   },
   {
@@ -64,10 +64,10 @@ export const products: Product[] = [
     name: "Guanciale",
     weight: "6 oz",
     price: 20,
-    short: "Cured pork jowl, the secret to real carbonara.",
+    short: "Premium cured cheek that adds rich flavor to your dishes.",
     description:
-      "Guanciale is cured pork jowl. Mangalitsa jowl renders into a golden, flavorful fat that makes pasta dishes sing.",
-    pairing: "Dice and crisp for carbonara or amatriciana, or wrap around vegetables before roasting.",
+      "Our guanciale is a premium product made from cured cheek. It is perfect for adding rich flavor to your dishes — ideal for professional chefs and home cooks alike.",
+    pairing: "Dice and crisp it for carbonara or amatriciana.",
     image: "guanciale",
   },
   {
@@ -75,10 +75,10 @@ export const products: Product[] = [
     name: "Pancetta",
     weight: "6 oz",
     price: 20,
-    short: "Cured pork belly for cooking, seasoned and savory.",
+    short: "Our own Mangalitsa pork belly, cured with Maine sea salt.",
     description:
-      "Pancetta is pork belly cured with salt and spices. It brings rich, savory depth to soups, sauces, beans and greens.",
-    pairing: "Render slowly as the base for sauces and soups, or crisp and scatter over salads.",
+      "Our pancetta is made from our own Mangalitsa pork belly, cured with Maine sea salt, expertly seasoned and aged for a rich, savory flavor. Perfect for adding depth to your favorite dishes.",
+    pairing: "Render slowly as the base for sauces, soups and beans.",
     image: "pancetta",
   },
 ];
@@ -88,22 +88,12 @@ export function getProduct(slug: string) {
 }
 
 // ---------- Build Your Own Board ----------
+// Every board starts with coppa, salami and one cheese. Everything else is an add-on.
 
 export const BOARD_BASE_PRICE = 50;
-export const BOARD_INCLUDED_MEATS = 2;
-export const BOARD_INCLUDED_CHEESES = 1;
+export const BOARD_BASE_MEATS = ["coppa", "salami"];
 export const EXTRA_MEAT_PRICE = 20;
 export const EXTRA_CHEESE_PRICE = 16;
-
-export type BoardSize = { id: string; name: string; serves: string; surcharge: number };
-
-// Serving sizes are from the farm's holiday boards.
-// PLACEHOLDER: size surcharges to be confirmed by the farm.
-export const boardSizes: BoardSize[] = [
-  { id: "small", name: "Small", serves: "Serves 3–5", surcharge: 0 },
-  { id: "medium", name: "Medium", serves: "Serves 6–10", surcharge: 15 },
-  { id: "large", name: "Large", serves: "Serves 11–16", surcharge: 30 },
-];
 
 export type Cheese = { id: string; name: string; note: string };
 
@@ -124,13 +114,15 @@ export const addOns: AddOn[] = [
 ];
 
 export type BoardSelection = {
-  size: string;
-  meats: Record<string, number>; // product slug -> quantity
-  cheeses: Record<string, number>; // cheese id -> quantity
+  baseCheese: string; // cheese id included in the base price
+  meats: Record<string, number>; // extra meats: product slug -> quantity
+  cheeses: Record<string, number>; // extra cheeses: cheese id -> quantity
   addOns: string[];
 };
 
-// Coerces untrusted input (e.g. from a form post) into a valid selection.
+export const emptyBoard = (): BoardSelection => ({ baseCheese: "", meats: {}, cheeses: {}, addOns: [] });
+
+// Coerces untrusted input (e.g. from a form post or old saved cart) into a valid selection.
 export function normalizeSelection(raw: unknown): BoardSelection {
   const r = (raw ?? {}) as Partial<Record<keyof BoardSelection, unknown>>;
   const clean = (m: unknown, valid: string[]) =>
@@ -140,7 +132,7 @@ export function normalizeSelection(raw: unknown): BoardSelection {
         .map(([id, q]) => [id, Math.max(0, Math.min(20, Math.floor(Number(q) || 0)))])
     );
   return {
-    size: boardSizes.some((s) => s.id === r.size) ? String(r.size) : boardSizes[0].id,
+    baseCheese: cheeses.some((c) => c.id === r.baseCheese) ? String(r.baseCheese) : cheeses[0].id,
     meats: clean(r.meats, products.map((p) => p.slug)),
     cheeses: clean(r.cheeses, cheeses.map((c) => c.id)),
     addOns: Array.isArray(r.addOns) ? addOns.map((a) => a.id).filter((id) => (r.addOns as unknown[]).includes(id)) : [],
@@ -151,37 +143,41 @@ export function countOf(map: Record<string, number>) {
   return Object.values(map).reduce((a, b) => a + b, 0);
 }
 
+export const cheeseName = (id: string) => cheeses.find((c) => c.id === id)?.name ?? id;
+
 export function boardBreakdown(sel: BoardSelection) {
-  const size = boardSizes.find((s) => s.id === sel.size) ?? boardSizes[0];
-  const meatCount = countOf(sel.meats);
-  const cheeseCount = countOf(sel.cheeses);
-  const extraMeats = Math.max(0, meatCount - BOARD_INCLUDED_MEATS);
-  const extraCheeses = Math.max(0, cheeseCount - BOARD_INCLUDED_CHEESES);
+  const extraMeats = countOf(sel.meats);
+  const extraCheeses = countOf(sel.cheeses);
   const chosenAddOns = addOns.filter((a) => sel.addOns.includes(a.id));
   const lines = [
-    { label: `Board base (${BOARD_INCLUDED_MEATS} meats + ${BOARD_INCLUDED_CHEESES} cheese)`, amount: BOARD_BASE_PRICE },
-    ...(size.surcharge ? [{ label: `${size.name} board`, amount: size.surcharge }] : []),
+    { label: "Base board (coppa, salami & cheese)", amount: BOARD_BASE_PRICE },
     ...(extraMeats ? [{ label: `Extra meats × ${extraMeats}`, amount: extraMeats * EXTRA_MEAT_PRICE }] : []),
     ...(extraCheeses ? [{ label: `Extra cheeses × ${extraCheeses}`, amount: extraCheeses * EXTRA_CHEESE_PRICE }] : []),
     ...chosenAddOns.map((a) => ({ label: a.name, amount: a.price })),
   ];
-  return { size, meatCount, cheeseCount, lines, total: lines.reduce((a, l) => a + l.amount, 0) };
+  return { lines, total: lines.reduce((a, l) => a + l.amount, 0) };
+}
+
+const listCounts = (map: Record<string, number>, lookup: (id: string) => string | undefined) =>
+  Object.entries(map)
+    .filter(([, q]) => q > 0)
+    .map(([id, q]) => `${lookup(id) ?? id}${q > 1 ? ` ×${q}` : ""}`);
+
+export function boardParts(sel: BoardSelection) {
+  return {
+    base: `Coppa, Salami, ${cheeseName(sel.baseCheese)}`,
+    meats: listCounts(sel.meats, (id) => getProduct(id)?.name),
+    cheeses: listCounts(sel.cheeses, cheeseName),
+    addOns: addOns.filter((a) => sel.addOns.includes(a.id)).map((a) => a.name),
+  };
 }
 
 export function describeBoard(sel: BoardSelection) {
-  const { size } = boardBreakdown(sel);
-  const name = (map: Record<string, number>, lookup: (id: string) => string | undefined) =>
-    Object.entries(map)
-      .filter(([, q]) => q > 0)
-      .map(([id, q]) => `${lookup(id) ?? id}${q > 1 ? ` ×${q}` : ""}`)
-      .join(", ");
-  const parts = [
-    `${size.name} board`,
-    `Meats: ${name(sel.meats, (id) => getProduct(id)?.name)}`,
-    `Cheese: ${name(sel.cheeses, (id) => cheeses.find((c) => c.id === id)?.name)}`,
-  ];
-  const extras = addOns.filter((a) => sel.addOns.includes(a.id)).map((a) => a.name);
-  if (extras.length) parts.push(`Add-ons: ${extras.join(", ")}`);
+  const p = boardParts(sel);
+  const parts = [`Base: ${p.base}`];
+  if (p.meats.length) parts.push(`Extra meats: ${p.meats.join(", ")}`);
+  if (p.cheeses.length) parts.push(`Extra cheese: ${p.cheeses.join(", ")}`);
+  if (p.addOns.length) parts.push(`Add-ons: ${p.addOns.join(", ")}`);
   return parts.join(" · ");
 }
 

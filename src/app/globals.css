@@ -1208,3 +1208,32 @@ fieldset {
   font-size: 0.95rem;
   color: var(--bark-soft);
 }
+.sub-head {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--sage);
+  margin: 1.5rem 0 0;
+}
+.base-meats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0.5rem;
+}
+.base-meat {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem;
+  background: #fff;
+  border: 2px solid var(--brick);
+  border-radius: 12px;
+}
+.base-meat .photo {
+  width: 56px;
+  height: 56px;
+  flex: none;
+  border-radius: 8px;
+}

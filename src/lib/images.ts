@@ -22,17 +22,17 @@ export const images = {
   donkeys: img("donkeys.jpg", "Two donkeys looking into the camera"),
   turkey: img("turkey.jpg", "A curious turkey up close"),
   tractor: img("tractor.jpg", "An old red tractor among hollyhocks"),
-  board: img("charcuterie-sliced.jpg", "Thinly sliced Brickhouse Farm charcuterie"),
-  wedding: img("wedding-pigs.jpg", "Two pigs dressed as a bride and groom kissing"),
+  board: img("board.jpg", "A Brickhouse Farm charcuterie board with cured meats, cheese, bread, almonds, honey and fruit spread"),
+  curing: img("coppa.jpg", "A whole coppa cut in half, showing its marbling"),
+  sliced: img("charcuterie-sliced.jpg", "Thinly sliced Brickhouse Farm charcuterie"),
 
-  // Charcuterie. The live site has three charcuterie photos; the cuts they
-  // show are best guesses. Products without their own photo use a farm photo.
-  lonza: img("charcuterie-sliced.jpg", "Thinly sliced lonza"),
-  coppa: img("coppa.jpg", "A whole coppa cut in half, showing its marbling"),
-  culatello: img("culatello.jpg", "A tied culatello cut in half"),
-  salami: img("mangalitsa-curly.jpg", "A curly-haired Mangalitsa pig"),
-  guanciale: img("pigs-apples.jpg", "Mangalitsa pigs eating apples"),
-  pancetta: img("pigs-pumpkins.jpg", "A Mangalitsa pig with pumpkins"),
+  // Product photos from the farm's online store.
+  lonza: img("product-lonza.jpg", "Thinly sliced lonza"),
+  coppa: img("product-coppa.jpg", "A whole coppa cut open, showing its marbling"),
+  salami: img("product-salami.jpg", "A whole salami with slices on a wooden board"),
+  culatello: img("product-culatello.jpg", "Paper-thin slices of culatello"),
+  guanciale: img("product-guanciale.jpg", "Two pieces of cured guanciale"),
+  pancetta: img("product-pancetta.jpg", "Two pieces of cured pancetta"),
 } satisfies Record<string, ImageSlot>;
 
 export type ImageKey = keyof typeof images;

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Photo } from "@/components/Photo";
 import { ProductCard } from "@/components/ProductCard";
-import { products } from "@/lib/catalog";
+import { BOARD_BASE_PRICE, formatPrice, products } from "@/lib/catalog";
 import { retailers, site } from "@/lib/site";
 
 // Wording from brickhousefarmmaine.com, lightly edited for clarity.
@@ -19,17 +19,66 @@ export default function Home() {
             Experience the farm-to-table difference at Brickhouse Farm.
           </p>
           <div className="btn-row">
-            <Link href="/shop" className="btn btn-primary">
-              Shop Charcuterie
-            </Link>
-            <Link href="/build-your-board" className="btn btn-outline">
+            <Link href="/build-your-board" className="btn btn-primary">
               Build Your Board
+            </Link>
+            <Link href="/shop" className="btn btn-outline">
+              Shop Charcuterie
             </Link>
           </div>
         </div>
       </section>
 
       <section className="section">
+        <div className="container split">
+          <Photo name="board" className="ratio-4x3" sizes="(min-width: 860px) 50vw, 100vw" />
+          <div>
+            <p className="eyebrow">Charcuterie boards</p>
+            <h2>Build your own board</h2>
+            <p>
+              Every board starts with our coppa, salami and a cheese of your choice for {formatPrice(BOARD_BASE_PRICE)}.
+              Then make it yours: add more of our handcrafted meats, extra cheese, raw Maine honey, sprouted almonds and
+              seasonal fruit spreads.
+            </p>
+            <Link href="/build-your-board" className="btn btn-primary">
+              Start your board
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-alt">
+        <div className="container">
+          <div className="section-head center">
+            <p className="eyebrow">From our farm</p>
+            <h2>Individual charcuterie</h2>
+            <p className="muted">
+              Our meats contain no preservatives or nitrates (our salami has only trace amounts of nitrate).
+            </p>
+          </div>
+          <div className="product-grid">
+            {products.map((p) => (
+              <ProductCard key={p.slug} product={p} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container split reverse">
+          <Photo name="highlandCow" className="ratio-4x3" sizes="(min-width: 860px) 50vw, 100vw" />
+          <div>
+            <p className="eyebrow">Meat shares</p>
+            <h2>Grass-fed beef by the whole or half</h2>
+            <p>Fill your freezer with beef raised on our Buckfield pastures. Send us an enquiry to reserve your share.</p>
+            <Link href="/meat-shares" className="btn btn-outline">
+              About meat shares
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-alt">
         <div className="container split">
           <Photo name="farmhouse" className="ratio-4x3" sizes="(min-width: 860px) 50vw, 100vw" />
           <div>
@@ -52,7 +101,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section section-alt">
+      <section className="section">
         <div className="container">
           <div className="section-head center">
             <p className="eyebrow">Our mission</p>
@@ -74,42 +123,6 @@ export default function Home() {
               <h3>USDA certified</h3>
               <p>Exquisite pasture-raised, USDA certified Mangalitsa pork — &ldquo;the Kobe beef of pork.&rdquo;</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <div className="section-head center">
-            <p className="eyebrow">From our farm</p>
-            <h2>Handcrafted charcuterie</h2>
-            <p className="muted">
-              Our meats contain no preservatives or nitrates (our salami has only trace amounts of nitrate).
-            </p>
-          </div>
-          <div className="product-grid">
-            {products.slice(0, 3).map((p) => (
-              <ProductCard key={p.slug} product={p} />
-            ))}
-          </div>
-          <p style={{ textAlign: "center", marginTop: "2rem" }}>
-            <Link href="/shop" className="btn btn-outline">
-              See all charcuterie
-            </Link>
-          </p>
-        </div>
-      </section>
-
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <div className="cta-band">
-            <div>
-              <h2>Build your own charcuterie board</h2>
-              <p>Our meats paired with hand-selected cheeses, raw honey, sprouted nuts and seasonal fruit spreads.</p>
-            </div>
-            <Link href="/build-your-board" className="btn btn-light">
-              Start building
-            </Link>
           </div>
         </div>
       </section>

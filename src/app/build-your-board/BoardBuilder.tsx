@@ -3,24 +3,24 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
+import { Photo } from "@/components/Photo";
 import {
+  BOARD_BASE_MEATS,
   BOARD_BASE_PRICE,
-  BOARD_INCLUDED_CHEESES,
-  BOARD_INCLUDED_MEATS,
   EXTRA_CHEESE_PRICE,
   EXTRA_MEAT_PRICE,
   addOns,
   boardBreakdown,
-  boardSizes,
+  boardParts,
   cheeses,
+  emptyBoard,
   formatPrice,
+  getProduct,
   products,
   type BoardSelection,
 } from "@/lib/catalog";
 
-const STEPS = ["Board size", "Meats", "Cheese", "Add-ons", "Review"];
-
-const emptySelection = (): BoardSelection => ({ size: boardSizes[0].id, meats: {}, cheeses: {}, addOns: [] });
+const STEPS = ["Base board", "Add meats", "Add cheese & extras", "Review"];
 
 type Counts = Record<string, number>;
 
@@ -59,12 +59,14 @@ function QtyOption({
 export function BoardBuilder() {
   const { addBoard } = useCart();
   const [step, setStep] = useState(0);
-  const [sel, setSel] = useState<BoardSelection>(emptySelection);
+  const [sel, setSel] = useState<BoardSelection>(emptyBoard);
   const [added, setAdded] = useState(false);
 
-  const { size, meatCount, cheeseCount, lines, total } = boardBreakdown(sel);
+  const { lines, total } = boardBreakdown(sel);
+  const parts = boardParts(sel);
+  const last = STEPS.length - 1;
 
-  const stepValid = [true, meatCount >= BOARD_INCLUDED_MEATS, cheeseCount >= BOARD_INCLUDED_CHEESES, true, true];
+  const stepValid = [Boolean(sel.baseCheese), true, true, true];
   const canReach = (i: number) => stepValid.slice(0, i).every(Boolean);
 
   const setCount = (key: "meats" | "cheeses", id: string, qty: number) =>
@@ -73,25 +75,13 @@ export function BoardBuilder() {
   const toggleAddOn = (id: string) =>
     setSel((s) => ({ ...s, addOns: s.addOns.includes(id) ? s.addOns.filter((a) => a !== id) : [...s.addOns, id] }));
 
-  const chosen = (map: Counts, lookup: (id: string) => string | undefined) =>
-    Object.entries(map)
-      .filter(([, q]) => q > 0)
-      .map(([id, q]) => `${lookup(id)}${q > 1 ? ` ×${q}` : ""}`);
-
-  const meatNames = chosen(sel.meats, (id) => products.find((p) => p.slug === id)?.name);
-  const cheeseNames = chosen(sel.cheeses, (id) => cheeses.find((c) => c.id === id)?.name);
-  const addOnNames = addOns.filter((a) => sel.addOns.includes(a.id)).map((a) => a.name);
-
-  const handleAdd = () => {
-    addBoard(sel);
-    setAdded(true);
-  };
-
   const startOver = () => {
-    setSel(emptySelection());
+    setSel(emptyBoard());
     setStep(0);
     setAdded(false);
   };
+
+  const baseMeatNames = BOARD_BASE_MEATS.map((slug) => getProduct(slug)?.name).join(" & ");
 
   return (
     <div className="builder">
@@ -115,66 +105,70 @@ export function BoardBuilder() {
         <div className="step-panel">
           {step === 0 && (
             <>
-              <p className="eyebrow">Step 1 of 5</p>
-              <h2>Choose your board size</h2>
-              <p className="muted">
-                Every board starts at {formatPrice(BOARD_BASE_PRICE)} and includes {BOARD_INCLUDED_MEATS} meats and{" "}
-                {BOARD_INCLUDED_CHEESES} cheese.
+              <p className="eyebrow">
+                Step 1 of {STEPS.length} · {formatPrice(BOARD_BASE_PRICE)}
               </p>
-              <div className="option-grid" role="radiogroup" aria-label="Board size">
-                {boardSizes.map((b) => (
-                  <label key={b.id} className={`option${sel.size === b.id ? " selected" : ""}`}>
+              <h2>Your base board</h2>
+              <p className="muted">
+                Every board starts with our {baseMeatNames} and a cheese of your choice. Pick your cheese:
+              </p>
+              <div className="base-meats">
+                {BOARD_BASE_MEATS.map((slug) => {
+                  const p = getProduct(slug)!;
+                  return (
+                    <div key={slug} className="base-meat">
+                      <Photo name={p.image} sizes="80px" />
+                      <div>
+                        <div className="option-title">{p.name}</div>
+                        <div className="option-meta">Included</div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="option-grid" role="radiogroup" aria-label="Base cheese">
+                {cheeses.map((c) => (
+                  <label key={c.id} className={`option${sel.baseCheese === c.id ? " selected" : ""}`}>
                     <input
                       type="radio"
-                      name="size"
-                      value={b.id}
-                      checked={sel.size === b.id}
-                      onChange={() => setSel((s) => ({ ...s, size: b.id }))}
+                      name="baseCheese"
+                      value={c.id}
+                      checked={sel.baseCheese === c.id}
+                      onChange={() => setSel((s) => ({ ...s, baseCheese: c.id }))}
                     />
-                    <span className="option-title">{b.name}</span>
-                    <span className="option-meta">{b.serves}</span>
-                    <span className="option-meta">{b.surcharge ? `+${formatPrice(b.surcharge)}` : "Included"}</span>
+                    <span className="option-title">{c.name}</span>
+                    <span className="option-meta">{c.note}</span>
                   </label>
                 ))}
               </div>
-              <p className="placeholder-note">Board size pricing is a placeholder pending confirmation.</p>
+              <p className="placeholder-note">Cheese selection is a placeholder pending confirmation.</p>
             </>
           )}
 
           {step === 1 && (
             <>
-              <p className="eyebrow">Step 2 of 5</p>
-              <h2>Pick your meats</h2>
-              <p className="muted">
-                Choose at least {BOARD_INCLUDED_MEATS}. Each meat beyond {BOARD_INCLUDED_MEATS} is +
-                {formatPrice(EXTRA_MEAT_PRICE)}.
-              </p>
+              <p className="eyebrow">Step 2 of {STEPS.length} · optional</p>
+              <h2>Add more meats</h2>
+              <p className="muted">Add any of our charcuterie to your board, +{formatPrice(EXTRA_MEAT_PRICE)} each.</p>
               <div className="option-grid">
                 {products.map((p) => (
                   <QtyOption
                     key={p.slug}
                     title={p.name}
-                    meta={p.weight}
+                    meta={`${p.weight} · +${formatPrice(EXTRA_MEAT_PRICE)}`}
                     qty={sel.meats[p.slug] ?? 0}
                     onChange={(q) => setCount("meats", p.slug, q)}
                   />
                 ))}
               </div>
-              <p className="counter-hint" aria-live="polite">
-                {meatCount < BOARD_INCLUDED_MEATS
-                  ? `Select ${BOARD_INCLUDED_MEATS - meatCount} more to continue.`
-                  : `${meatCount} selected${meatCount > BOARD_INCLUDED_MEATS ? ` — ${meatCount - BOARD_INCLUDED_MEATS} extra` : ""}.`}
-              </p>
             </>
           )}
 
           {step === 2 && (
             <>
-              <p className="eyebrow">Step 3 of 5</p>
-              <h2>Choose your cheese</h2>
-              <p className="muted">
-                {BOARD_INCLUDED_CHEESES} cheese is included. Each additional cheese is +{formatPrice(EXTRA_CHEESE_PRICE)}.
-              </p>
+              <p className="eyebrow">Step 3 of {STEPS.length} · optional</p>
+              <h2>Add cheese &amp; finishing touches</h2>
+              <h3 className="sub-head">Extra cheese · +{formatPrice(EXTRA_CHEESE_PRICE)} each</h3>
               <div className="option-grid">
                 {cheeses.map((c) => (
                   <QtyOption
@@ -186,20 +180,7 @@ export function BoardBuilder() {
                   />
                 ))}
               </div>
-              <p className="counter-hint" aria-live="polite">
-                {cheeseCount < BOARD_INCLUDED_CHEESES
-                  ? `Select ${BOARD_INCLUDED_CHEESES - cheeseCount} to continue.`
-                  : `${cheeseCount} selected${cheeseCount > BOARD_INCLUDED_CHEESES ? ` — ${cheeseCount - BOARD_INCLUDED_CHEESES} extra` : ""}.`}
-              </p>
-              <p className="placeholder-note">Cheese selection is a placeholder pending confirmation.</p>
-            </>
-          )}
-
-          {step === 3 && (
-            <>
-              <p className="eyebrow">Step 4 of 5</p>
-              <h2>Add the finishing touches</h2>
-              <p className="muted">Optional extras to round out your board.</p>
+              <h3 className="sub-head">Extras</h3>
               <div className="option-grid">
                 {addOns.map((a) => (
                   <label key={a.id} className={`option${sel.addOns.includes(a.id) ? " selected" : ""}`}>
@@ -214,27 +195,27 @@ export function BoardBuilder() {
             </>
           )}
 
-          {step === 4 && (
+          {step === last && (
             <>
-              <p className="eyebrow">Step 5 of 5</p>
+              <p className="eyebrow">Step {STEPS.length} of {STEPS.length}</p>
               <h2>Review your board</h2>
               <ul className="prose">
                 <li>
-                  <strong>{size.name} board</strong> ({size.serves})
+                  <strong>Base:</strong> {parts.base}
                 </li>
                 <li>
-                  <strong>Meats:</strong> {meatNames.join(", ")}
+                  <strong>Extra meats:</strong> {parts.meats.length ? parts.meats.join(", ") : "None"}
                 </li>
                 <li>
-                  <strong>Cheese:</strong> {cheeseNames.join(", ")}
+                  <strong>Extra cheese:</strong> {parts.cheeses.length ? parts.cheeses.join(", ") : "None"}
                 </li>
                 <li>
-                  <strong>Add-ons:</strong> {addOnNames.length ? addOnNames.join(", ") : "None"}
+                  <strong>Extras:</strong> {parts.addOns.length ? parts.addOns.join(", ") : "None"}
                 </li>
               </ul>
               {added ? (
                 <div className="form-status ok" role="status">
-                  Your board has been added to the cart.{" "}
+                  Your board has been added to the cart.
                   <div className="btn-row" style={{ marginTop: "0.75rem" }}>
                     <Link href="/cart" className="btn btn-primary">
                       View cart
@@ -245,7 +226,14 @@ export function BoardBuilder() {
                   </div>
                 </div>
               ) : (
-                <button type="button" className="btn btn-primary" onClick={handleAdd}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => {
+                    addBoard(sel);
+                    setAdded(true);
+                  }}
+                >
                   Add board to cart — {formatPrice(total)}
                 </button>
               )}
@@ -257,7 +245,7 @@ export function BoardBuilder() {
             <strong>{formatPrice(total)}</strong>
           </p>
 
-          {!(step === 4 && added) && (
+          {!(step === last && added) && (
             <div className="step-nav">
               <button
                 type="button"
@@ -267,14 +255,14 @@ export function BoardBuilder() {
               >
                 Back
               </button>
-              {step < 4 && (
+              {step < last && (
                 <button
                   type="button"
                   className="btn btn-primary"
                   disabled={!stepValid[step]}
                   onClick={() => setStep((s) => s + 1)}
                 >
-                  Next: {STEPS[step + 1]}
+                  {step === 0 && !sel.baseCheese ? "Choose a cheese" : `Next: ${STEPS[step + 1]}`}
                 </button>
               )}
             </div>
@@ -285,14 +273,14 @@ export function BoardBuilder() {
       <aside className="summary" aria-label="Board summary">
         <h3>Your board</h3>
         <dl>
-          <dt>Size</dt>
-          <dd>{size.name}</dd>
-          <dt>Meats</dt>
-          <dd>{meatNames.length ? meatNames.join(", ") : "—"}</dd>
-          <dt>Cheese</dt>
-          <dd>{cheeseNames.length ? cheeseNames.join(", ") : "—"}</dd>
-          <dt>Add-ons</dt>
-          <dd>{addOnNames.length ? addOnNames.join(", ") : "—"}</dd>
+          <dt>Base</dt>
+          <dd>{sel.baseCheese ? parts.base : `${baseMeatNames} + your cheese`}</dd>
+          <dt>Extra meats</dt>
+          <dd>{parts.meats.length ? parts.meats.join(", ") : "—"}</dd>
+          <dt>Extra cheese</dt>
+          <dd>{parts.cheeses.length ? parts.cheeses.join(", ") : "—"}</dd>
+          <dt>Extras</dt>
+          <dd>{parts.addOns.length ? parts.addOns.join(", ") : "—"}</dd>
         </dl>
         <ul className="summary-lines">
           {lines.map((l) => (
