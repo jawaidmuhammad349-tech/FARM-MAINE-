@@ -98,7 +98,7 @@ export function CartView() {
             <span>{formatPrice(subtotal)}</span>
           </li>
           <li>
-            <span>{fulfillment === "ship" ? "Shipping (placeholder)" : "Pickup"}</span>
+            <span>{fulfillment === "ship" ? "Shipping" : "Pickup"}</span>
             <span>{shipping ? formatPrice(shipping) : "Free"}</span>
           </li>
           <li className="grand">
@@ -106,9 +106,6 @@ export function CartView() {
             <span>{formatPrice(subtotal + shipping)}</span>
           </li>
         </ul>
-        <p className="placeholder-note" style={{ marginTop: "1rem" }}>
-          Shipping cost is a placeholder pending confirmation.
-        </p>
       </div>
 
       <div className="card">

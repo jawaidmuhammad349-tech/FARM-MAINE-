@@ -4,6 +4,8 @@
 export type ImageSlot = { src: string | null; alt: string; hint: string };
 
 const img = (file: string, alt: string): ImageSlot => ({ src: `/images/${file}`, alt, hint: file });
+// Photo not available yet: shows a labelled placeholder.
+const todo = (hint: string, alt: string): ImageSlot => ({ src: null, alt, hint });
 
 export const images = {
   hero: img("hero.jpg", "Sunset over the pasture at Brickhouse Farm, with donkeys grazing"),
@@ -33,6 +35,16 @@ export const images = {
   culatello: img("product-culatello.jpg", "Paper-thin slices of culatello"),
   guanciale: img("product-guanciale.jpg", "Two pieces of cured guanciale"),
   pancetta: img("product-pancetta.jpg", "Two pieces of cured pancetta"),
+
+  // PLACEHOLDER: product photos to come from the makers' websites.
+  bellavitano: todo("BellaVitano photo coming soon", "BellaVitano cheese"),
+  marisa: todo("Marisa photo coming soon", "Marisa sheep's milk cheese"),
+  cardona: todo("Cardona photo coming soon", "Cardona goat cheese"),
+  cheeseCurds: todo("Cheese curds photo coming soon", "White cheddar cheese curds"),
+  cremerKasa: todo("Cremer Kasa photo coming soon", "Cremer Kasa cheese"),
+  almonds: todo("Almonds photo coming soon", "Old World Italian Herb Almonds"),
+  honey: todo("Honey photo coming soon", "A jar of raw Maine honey"),
+  crackers: todo("Crackers photo coming soon", "Sourdough crackers"),
 } satisfies Record<string, ImageSlot>;
 
 export type ImageKey = keyof typeof images;

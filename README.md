@@ -48,8 +48,8 @@ Text and photos come from brickhousefarmmaine.com: Amie's "Who We Are", mission 
 holiday board details (serving sizes, artisan partners, packaging notes, pickup locations), the weddings page
 and the contact details. Wording has only been lightly edited for clarity (typos, punctuation).
 
-Product descriptions are from the farm's online store. Weights follow the original scope; the store lists
-some cuts at different weights (e.g. Coppa 3 oz, Salami 5.5 oz), so confirm with the farm.
+Charcuterie descriptions are from the farm's online store; weights are as confirmed by the farm. Cheese and
+pantry descriptions were supplied by the farm.
 
 ### Images
 
@@ -73,15 +73,19 @@ The lettering is dark brown, so use the full logo on light backgrounds only.
 - The artisan partner photos on the live site (screenshots of other businesses and a Google Images result)
   were not copied.
 
-### Placeholders awaiting confirmation from the farm
+### Still to come from the farm
 
-- **Cheese list**: `cheeses` in `src/lib/catalog.ts` (currently the three creameries from the holiday boards)
-- **Shipping cost**: `SHIPPING_FLAT_RATE` in `src/lib/catalog.ts` (currently $15). Note the live site says
-  boards are pickup only, with no shipping.
-- **Beef share details** (weights, price per lb, deposit, timing): `src/app/meat-shares/page.tsx`
+- **Cheese and pantry photos**: slots in `src/lib/images.ts` show "photo coming soon". Sources: sartoricheese.com
+  (BellaVitano), wisconsincheesemart.com (Cremer Kasa and other cheeses), livingnutz.com (almonds).
+- **Cremer Kasa**: size and description (to copy from wisconsincheesemart.com). Price is $16.
+- **Almonds**: package size.
+- **Sourdough crackers**: price and description (from the baker). Shown as "Coming soon" until priced.
+
+Products with `price: null` in `src/lib/catalog.ts` are listed as "Coming soon" and can't be added to the cart.
 
 ## Pricing rules (Build Your Own Board)
 
-- Base $50: coppa, salami and one cheese of the customer's choice (no board sizes)
-- Each extra meat +$20, each extra cheese +$16
-- Add-ons: compote +$12, honey +$12, almonds +$10
+- Base $50: any 2 meats (coppa, salami, lonza, culatello) and 1 cheese (any of the 5)
+- More meats +$20 each, more cheeses +$16 each
+- Local honey +$12, Living Nutz almonds +$10
+- Shipping: flat $15 per order, or free pickup (Buckfield, Portland, Lewiston, Augusta)

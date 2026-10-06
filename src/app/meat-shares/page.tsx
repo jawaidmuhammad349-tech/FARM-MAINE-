@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: "Reserve a whole or half share of Brickhouse Farm grass-fed beef. Learn how buying in bulk works and send an enquiry.",
 };
 
-// PLACEHOLDER: share pricing, hanging weights, deposit and timing to be confirmed by the farm.
 
 export default function MeatShares() {
   return (
@@ -30,25 +29,14 @@ export default function MeatShares() {
             <div className="share-card">
               <h3>Whole cow</h3>
               <p className="muted">Best for large families or splitting with friends.</p>
-              <ul>
-                <li>Approx. hanging weight: TBD</li>
-                <li>Approx. take-home: TBD</li>
-                <li>Price: TBD per lb hanging weight</li>
-                <li>Deposit: TBD</li>
-              </ul>
             </div>
             <div className="share-card">
               <h3>Half cow</h3>
               <p className="muted">A great fit for most households.</p>
-              <ul>
-                <li>Approx. hanging weight: TBD</li>
-                <li>Approx. take-home: TBD</li>
-                <li>Price: TBD per lb hanging weight</li>
-                <li>Deposit: TBD</li>
-              </ul>
             </div>
-            <p className="placeholder-note" style={{ gridColumn: "1 / -1", margin: 0 }}>
-              Share sizes, pricing and timing are placeholders pending confirmation.
+            <p className="muted" style={{ gridColumn: "1 / -1", margin: 0 }}>
+              Pricing and availability vary by season. <a href="#enquire">Send us an enquiry</a> and we&rsquo;ll get back
+              to you with details.
             </p>
           </div>
         </div>

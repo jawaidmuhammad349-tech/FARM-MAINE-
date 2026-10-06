@@ -5,37 +5,29 @@ import { BoardBuilder } from "./BoardBuilder";
 export const metadata: Metadata = {
   title: "Charcuterie Boards",
   description:
-    "Build a charcuterie board starting with Brickhouse Farm coppa, salami and cheese for $50, then add more meats, cheese, honey, almonds and fruit spreads.",
+    "Build a charcuterie board with two Brickhouse Farm meats and a cheese for $50, then add more meats, cheese, honey and almonds.",
 };
 
 // Wording from brickhousefarmmaine.com, lightly edited for clarity.
 
 const partners = [
   {
-    name: "Crooked Face Creamery",
-    text: "A Maine-based artisan creamery specializing in small-batch cheeses made with local ingredients.",
-  },
-  {
-    name: "Marieke Gouda",
-    text: "A Wisconsin creamery that crafts farmstead raw milk gouda in the traditional Dutch style, using milk piped straight from their own cows.",
-  },
-  {
     name: "Sartori Cheese",
     text: "A fourth-generation, family-owned Wisconsin creamery known for award-winning artisan cheese like BellaVitano.",
+  },
+  {
+    name: "Clock Shadow Creamery",
+    text: "The Wisconsin creamery behind our white cheddar cheese curds.",
   },
   {
     name: "Living Nutz",
     text: "A Maine family-owned company producing organic, raw and sprouted nut snacks, dehydrated at low temperatures to preserve enzymes and nutrition.",
   },
   {
-    name: "Ruby on the Hill",
-    text: "A local Maine artisan sourdough bakery using raw, organic, non-GMO ingredients.",
-  },
-  {
-    name: "Tony's Honey",
+    name: "Tom's Honey",
     text: "A fourth-generation beekeeping family in Buckfield, Maine, producing raw, unfiltered Maine honey.",
   },
-];
+]
 
 export default function BuildYourBoard() {
   return (
@@ -46,8 +38,8 @@ export default function BuildYourBoard() {
             <p className="eyebrow">Charcuterie Boards</p>
             <h1>Build your own board</h1>
             <p className="lead">
-              Every board starts with our coppa, salami and a cheese of your choice for $50. Then add whatever else you
-              like: more of our handcrafted meats, extra cheese, raw honey, sprouted almonds and seasonal fruit spreads.
+              Every board starts with two of our handcrafted meats and a cheese of your choice for $50. Then add whatever
+              else you like: more meats, extra cheese, raw Maine honey and sprouted almonds.
             </p>
           </div>
           <Photo name="board" className="ratio-4x3" priority sizes="(min-width: 860px) 50vw, 100vw" />
@@ -83,7 +75,7 @@ export default function BuildYourBoard() {
         <div className="container">
           <div className="section-head">
             <p className="eyebrow">Meet our artisan collaborators</p>
-            <h2>Made with Maine and Wisconsin artisans</h2>
+            <h2>Made with Maine and Wisconsin makers</h2>
             <p className="muted">
               We&rsquo;ve partnered with some of Maine and Wisconsin&rsquo;s most talented artisans to curate boards that
               celebrate craftsmanship and flavor.

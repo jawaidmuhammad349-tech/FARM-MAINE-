@@ -17,7 +17,7 @@ type CartContextValue = {
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
-const STORAGE_KEY = "brickhouse-cart-v2";
+const STORAGE_KEY = "brickhouse-cart-v3";
 
 export function itemPrice(item: CartItem) {
   if (item.kind === "product") return getProduct(item.slug)?.price ?? 0;
@@ -28,7 +28,7 @@ function sanitize(raw: unknown): CartItem[] {
   if (!Array.isArray(raw)) return [];
   return raw.flatMap((i): CartItem[] => {
     const qty = Math.max(1, Math.floor(Number(i?.qty) || 1));
-    if (i?.kind === "product" && getProduct(i.slug)) return [{ kind: "product", id: String(i.id), slug: i.slug, qty }];
+    if (i?.kind === "product" && getProduct(i.slug)?.price != null) return [{ kind: "product", id: String(i.id), slug: i.slug, qty }];
     if (i?.kind === "board") return [{ kind: "board", id: String(i.id), selection: normalizeSelection(i.selection), qty }];
     return [];
   });

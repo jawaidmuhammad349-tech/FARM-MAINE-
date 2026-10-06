@@ -50,7 +50,7 @@ export async function submitOrder(_prev: FormState, fd: FormData): Promise<FormS
     const qty = Math.max(1, Math.min(99, Math.floor(Number(item.qty) || 1)));
     if (item.kind === "product") {
       const p = getProduct(item.slug);
-      if (!p) continue;
+      if (!p || p.price === null) continue;
       subtotal += p.price * qty;
       lines.push(`${qty} × ${p.name} (${p.weight}) — ${formatPrice(p.price * qty)}`);
     } else if (item.kind === "board") {

@@ -36,9 +36,9 @@ export default function Home() {
             <p className="eyebrow">Charcuterie boards</p>
             <h2>Build your own board</h2>
             <p>
-              Every board starts with our coppa, salami and a cheese of your choice for {formatPrice(BOARD_BASE_PRICE)}.
-              Then make it yours: add more of our handcrafted meats, extra cheese, raw Maine honey, sprouted almonds and
-              seasonal fruit spreads.
+              Every board starts with two of our handcrafted meats and a cheese of your choice for{" "}
+              {formatPrice(BOARD_BASE_PRICE)}. Then make it yours: add more meats, extra cheese, raw Maine honey and
+              sprouted almonds.
             </p>
             <Link href="/build-your-board" className="btn btn-primary">
               Start your board
@@ -57,7 +57,7 @@ export default function Home() {
             </p>
           </div>
           <div className="product-grid">
-            {products.map((p) => (
+            {products.filter((p) => p.category === "charcuterie").map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
           </div>

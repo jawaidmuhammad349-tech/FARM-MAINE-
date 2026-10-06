@@ -1237,3 +1237,39 @@ fieldset {
   flex: none;
   border-radius: 8px;
 }
+.specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem 1.25rem;
+  margin: 1.25rem 0;
+}
+.specs dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--sage);
+  font-weight: 600;
+}
+.specs dd {
+  margin: 0.15rem 0 0;
+}
+.category-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+.category-links a {
+  padding: 0.45rem 1rem;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  color: var(--bark);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+  background: var(--paper);
+}
+.category-links a:hover {
+  border-color: var(--brick);
+  color: var(--brick);
+}

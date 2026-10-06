@@ -15,10 +15,10 @@ export function ProductCard({ product }: { product: Product }) {
           {product.short}
         </p>
         <div className="price-line">
-          <span className="price">{formatPrice(product.price)}</span>
+          <span className="price">{product.price === null ? "Coming soon" : formatPrice(product.price)}</span>
           <span className="weight">{product.weight}</span>
         </div>
-        <AddToCart slug={product.slug} />
+        {product.price !== null && <AddToCart slug={product.slug} />}
       </div>
     </article>
   );
