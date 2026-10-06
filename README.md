@@ -75,10 +75,8 @@ The lettering is dark brown, so use the full logo on light backgrounds only.
 
 ### Still to come from the farm
 
-- **Cheese and pantry photos**: slots in `src/lib/images.ts` show "photo coming soon". Sources: sartoricheese.com
-  (BellaVitano), wisconsincheesemart.com (Cremer Kasa and other cheeses), livingnutz.com (almonds).
-- **Cremer Kasa**: size and description (to copy from wisconsincheesemart.com). Price is $16.
-- **Almonds**: package size.
+- **Photos still needed** (slots marked `todo` in `src/lib/images.ts`): BellaVitano (Sartori's images are on
+  a.storyblok.com, which needs allowing), white cheddar cheese curds (Clock Shadow), honey, sourdough crackers.
 - **Sourdough crackers**: price and description (from the baker). Shown as "Coming soon" until priced.
 
 Products with `price: null` in `src/lib/catalog.ts` are listed as "Coming soon" and can't be added to the cart.

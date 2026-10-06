@@ -36,13 +36,13 @@ export const images = {
   guanciale: img("product-guanciale.jpg", "Two pieces of cured guanciale"),
   pancetta: img("product-pancetta.jpg", "Two pieces of cured pancetta"),
 
-  // PLACEHOLDER: product photos to come from the makers' websites.
+  // Cheese and pantry photos from the makers' and sellers' websites; todo() slots still need one.
   bellavitano: todo("BellaVitano photo coming soon", "BellaVitano cheese"),
-  marisa: todo("Marisa photo coming soon", "Marisa sheep's milk cheese"),
-  cardona: todo("Cardona photo coming soon", "Cardona goat cheese"),
+  marisa: img("product-marisa.jpg", "A wedge of Carr Valley Marisa sheep's milk cheese"),
+  cardona: img("product-cardona.jpg", "A wedge of Carr Valley Cardona goat cheese"),
   cheeseCurds: todo("Cheese curds photo coming soon", "White cheddar cheese curds"),
-  cremerKasa: todo("Cremer Kasa photo coming soon", "Cremer Kasa cheese"),
-  almonds: todo("Almonds photo coming soon", "Old World Italian Herb Almonds"),
+  cremaKasa: img("product-creama-kasa.jpg", "A wedge of Carr Valley Creama Kasa cheese"),
+  almonds: img("product-almonds.jpg", "A bag of Living Nutz Old World Italian Herb Almonds"),
   honey: todo("Honey photo coming soon", "A jar of raw Maine honey"),
   crackers: todo("Crackers photo coming soon", "Sourdough crackers"),
 } satisfies Record<string, ImageSlot>;

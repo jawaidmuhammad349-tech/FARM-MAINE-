@@ -132,6 +132,7 @@ export const products: Product[] = [
       ["Region", "LaValle, WI"],
       ["Milk type", "Sheep"],
       ["Pasteurization", "Pasteurized"],
+      ["Creamery", "Carr Valley Cheese"],
     ],
     image: "marisa",
   },
@@ -150,6 +151,7 @@ export const products: Product[] = [
       ["Milk type", "Goat"],
       ["Pasteurization", "Pasteurized"],
       ["Rennet", "Vegetarian"],
+      ["Creamery", "Carr Valley Cheese"],
     ],
     image: "cardona",
   },
@@ -165,16 +167,22 @@ export const products: Product[] = [
     specs: [["Creamery", "Clock Shadow Creamery"]],
     image: "cheeseCurds",
   },
-  // PLACEHOLDER: size and description to be copied from wisconsincheesemart.com.
   {
-    slug: "cremer-kasa",
-    name: "Cremer Kasa",
+    slug: "creama-kasa",
+    name: "Creama Kasa",
     category: "cheese",
-    weight: "",
+    weight: "5 oz",
     price: 16,
-    short: "Details coming soon.",
-    description: "Details coming soon.",
-    image: "cremerKasa",
+    short: "A rich, creamy triple-cream cheese, buttery and mildly sweet.",
+    description:
+      "Carr Valley\u2019s Creama Kasa is a luxuriously rich and creamy cheese that showcases the best of Wisconsin cheesemaking. Crafted from fresh cow\u2019s milk, this triple-cream cheese has an ultra-smooth texture and a buttery, piquant flavor that melts in your mouth. Perfect for spreading on warm bread or crackers, pairing with fresh fruit, or melting into gourmet dishes.",
+    specs: [
+      ["Tasting notes", "Buttery, velvety, mildly sweet"],
+      ["Region", "La Valle, WI"],
+      ["Milk type", "Cow"],
+      ["Creamery", "Carr Valley Cheese"],
+    ],
+    image: "cremaKasa",
   },
 
   // Pantry
@@ -182,11 +190,11 @@ export const products: Product[] = [
     slug: "italian-herb-almonds",
     name: "Old World Italian Herb Almonds",
     category: "pantry",
-    weight: "", // PLACEHOLDER: size to be confirmed
+    weight: "3 oz",
     price: 9,
-    short: "Savory raw almonds from Living Nutz, a Maine family-owned company.",
+    short: "Sprouted organic almonds with Italian herbs, from Living Nutz in Maine.",
     description:
-      "Living Nutz is a Maine family-owned company that produces organic, raw and sprouted nut snacks, dehydrated at low temperatures to preserve enzymes and nutrition.",
+      "Reminiscent of the old pizzerias. These organic, unpasteurized almonds are sprouted, dehydrated and marinated in Italian herbs for optimal taste and digestion. Living Nutz is a Maine family-owned company that makes organic, raw and sprouted nut snacks, dehydrated at low temperatures to preserve enzymes and nutrition.",
     image: "almonds",
   },
   {

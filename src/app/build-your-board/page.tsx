@@ -16,6 +16,10 @@ const partners = [
     text: "A fourth-generation, family-owned Wisconsin creamery known for award-winning artisan cheese like BellaVitano.",
   },
   {
+    name: "Carr Valley Cheese",
+    text: "A La Valle, Wisconsin creamery behind our Marisa, Cardona and Creama Kasa.",
+  },
+  {
     name: "Clock Shadow Creamery",
     text: "The Wisconsin creamery behind our white cheddar cheese curds.",
   },
