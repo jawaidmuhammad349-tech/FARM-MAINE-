@@ -26,6 +26,7 @@ export type Product = {
   description: string;
   pairing?: string;
   specs?: [string, string][];
+  tasting?: string; // short flavor note shown in the board builder
   image: ImageKey;
 };
 
@@ -37,9 +38,9 @@ export const products: Product[] = [
     category: "charcuterie",
     weight: "4 oz",
     price: 20,
-    short: "Marbled neck muscle cured with Maine sea salt, aged 6–7 months.",
+    short: "6–9 month dry-aged shoulder muscle.",
     description:
-      "We use an exquisitely marbled neck muscle and Maine sea salt only to achieve the perfect dry-cured coppa. It is aged for 6–7 months to ensure the delicate yet complex flavors are achieved.",
+      "We use an exquisitely marbled neck muscle and Maine sea salt only to achieve the perfect dry-cured coppa. It is aged for 6–9 months to ensure the delicate yet complex flavors are achieved.",
     pairing: "Paired with a glass of Vermentino and a sourdough baguette — chef's kiss.",
     image: "coppa",
   },
@@ -49,7 +50,7 @@ export const products: Product[] = [
     category: "charcuterie",
     weight: "6 oz",
     price: 20,
-    short: "Handcrafted with old Italian recipes and a wild fermentation.",
+    short: "Rotating flavors of aged, seasoned meat, insaccato (in a sack).",
     description:
       "Our premium salami is handcrafted using old Italian traditions and recipes. We use a wild fermentation process to ensure the highest quality.",
     pairing: "Perfect for any charcuterie board or pizza!",
@@ -61,9 +62,9 @@ export const products: Product[] = [
     category: "charcuterie",
     weight: "4 oz",
     price: 20,
-    short: "Cured with Maine sea salt, rolled in red pepper, bay leaf and fennel.",
+    short: "4–6 month dry-aged seasoned loin.",
     description:
-      "Our lonza is dry cured using Maine sea salt, then rolled in red pepper, bay leaf and fennel, where it is left to age for 5–6 months.",
+      "Our lonza is dry cured using Maine sea salt, then rolled in red pepper, bay leaf and fennel, where it is left to age for 4–6 months.",
     pairing: "Slice paper-thin and serve at room temperature.",
     image: "lonza",
   },
@@ -73,8 +74,9 @@ export const products: Product[] = [
     category: "charcuterie",
     weight: "4 oz",
     price: 20,
-    short: "Boneless prosciutto: Mangalitsa ham cured in Maine sea salt for 12 months.",
-    description: "Culatello is a boneless prosciutto: Mangalitsa ham dry cured in Maine sea salt for 12 months.",
+    short: "The finest, leanest portion of the hind leg, slowly aged for a year.",
+    description:
+      "Culatello is the finest, leanest portion of the pig\u2019s hind leg, salted and slowly aged for a year to produce a rich, delicate flavor.",
     pairing: "Enjoy on its own, sliced as thin as you can.",
     image: "culatello",
   },
@@ -107,9 +109,9 @@ export const products: Product[] = [
     slug: "bellavitano",
     name: "BellaVitano",
     category: "cheese",
-    weight: "5.3 oz",
+    weight: "5 oz",
     price: 14,
-    short: "Smooth, buttery and rich, with fruity, sweet and nutty notes.",
+    short: "A smooth, buttery, rich cow's milk cheese with fruity, sweet and nutty notes.",
     description:
       "This delicious cheese is made with cow's milk, is smooth, buttery and rich, and has notes of fruity, sweet and nutty flavors that will surprise your taste buds with every bite. Creamy, salty and sweet — a prized trifecta.",
     specs: [
@@ -117,6 +119,7 @@ export const products: Product[] = [
       ["Milk type", "Cow"],
       ["Pasteurization", "Pasteurized"],
     ],
+    tasting: "Smooth, buttery and rich, with fruity, sweet and nutty notes. Creamy, salty and sweet.",
     image: "bellavitano",
   },
   {
@@ -134,6 +137,7 @@ export const products: Product[] = [
       ["Pasteurization", "Pasteurized"],
       ["Creamery", "Carr Valley Cheese"],
     ],
+    tasting: "Mellow, complex and sweet. A great first cheese if you're new to sheep's milk.",
     image: "marisa",
   },
   {
@@ -153,6 +157,7 @@ export const products: Product[] = [
       ["Rennet", "Vegetarian"],
       ["Creamery", "Carr Valley Cheese"],
     ],
+    tasting: "Mild, sweet caramel flavor with a slight nuttiness. Aged for a firm yet soft texture.",
     image: "cardona",
   },
   {
@@ -165,26 +170,9 @@ export const products: Product[] = [
     description:
       "The famous Wisconsin cheese curd! Cheese curds are the absolute youngest form of cheese. Cheddar cheese curds are a natural part of the cheese-making process: after the whey separation step, curds are taken out of the cheese vat before being pressed into Cheddar or Colby. This iconic Wisconsin cheese has a great mild flavor and a firm, springy texture.",
     specs: [["Creamery", "Clock Shadow Creamery"]],
+    tasting: "The youngest form of cheddar: mild flavor and a firm, springy texture.",
     image: "cheeseCurds",
   },
-  {
-    slug: "creama-kasa",
-    name: "Creama Kasa",
-    category: "cheese",
-    weight: "5 oz",
-    price: 16,
-    short: "A rich, creamy triple-cream cheese, buttery and mildly sweet.",
-    description:
-      "Carr Valley\u2019s Creama Kasa is a luxuriously rich and creamy cheese that showcases the best of Wisconsin cheesemaking. Crafted from fresh cow\u2019s milk, this triple-cream cheese has an ultra-smooth texture and a buttery, piquant flavor that melts in your mouth. Perfect for spreading on warm bread or crackers, pairing with fresh fruit, or melting into gourmet dishes.",
-    specs: [
-      ["Tasting notes", "Buttery, velvety, mildly sweet"],
-      ["Region", "La Valle, WI"],
-      ["Milk type", "Cow"],
-      ["Creamery", "Carr Valley Cheese"],
-    ],
-    image: "cremaKasa",
-  },
-
   // Pantry
   {
     slug: "italian-herb-almonds",
@@ -208,15 +196,14 @@ export const products: Product[] = [
       "Tom's Honey is a fourth-generation beekeeping family that produces raw, unfiltered Maine honey. They are located in Buckfield, Maine.",
     image: "honey",
   },
-  // PLACEHOLDER: price and description coming from the baker.
   {
     slug: "sourdough-crackers",
-    name: "Sourdough Crackers",
+    name: "Sea Salt & Butter Sourdough Crackers",
     category: "pantry",
-    weight: "6 oz",
-    price: null,
-    short: "Details coming soon.",
-    description: "Details coming soon.",
+    weight: "5 oz",
+    price: 10,
+    short: "Crisp, buttery sourdough crackers finished with a touch of sea salt.",
+    description: "Crisp, buttery sourdough crackers finished with a touch of sea salt.",
     image: "crackers",
   },
 ];
@@ -232,7 +219,7 @@ export const BOARD_BASE_PRICE = 50;
 export const BOARD_BASE_MEAT_COUNT = 2;
 export const BOARD_MEATS = ["coppa", "salami", "lonza", "culatello"];
 export const EXTRA_MEAT_PRICE = 20;
-export const EXTRA_CHEESE_PRICE = 16;
+export const EXTRA_CHEESE_PRICE = 12;
 
 export const boardMeats = () => BOARD_MEATS.map((slug) => getProduct(slug)!);
 export const boardCheeses = () => products.filter((p) => p.category === "cheese" && p.price !== null);
@@ -242,6 +229,7 @@ export type AddOn = { id: string; name: string; price: number; note: string };
 export const addOns: AddOn[] = [
   { id: "honey", name: "Local honey", price: 12, note: "Raw, unfiltered Maine honey from Buckfield" },
   { id: "almonds", name: "Living Nutz almonds", price: 10, note: "Organic sprouted almonds from a Maine family company" },
+  { id: "crackers", name: "Sourdough crackers", price: 10, note: "Sea salt & butter sourdough crackers, 5 oz" },
 ];
 
 export type BoardSelection = {

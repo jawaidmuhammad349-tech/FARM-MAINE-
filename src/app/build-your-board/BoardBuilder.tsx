@@ -17,9 +17,18 @@ import {
   emptyBoard,
   formatPrice,
   type BoardSelection,
+  type Product,
 } from "@/lib/catalog";
 
 const STEPS = ["Pick 2 meats", "Pick a cheese", "Add-ons", "Review"];
+
+// "Cow's milk · Plymouth, WI" from a cheese's specs.
+const cheeseFacts = (p: Product) => {
+  const spec = (k: string) => p.specs?.find(([key]) => key === k)?.[1];
+  const milk = spec("Milk type");
+  return [milk && `${milk}'s milk`, spec("Region") ?? spec("Creamery")].filter(Boolean).join(" · ");
+};
+const cheeseMeta = (p: Product) => [p.weight, cheeseFacts(p)].filter(Boolean).join(" · ") + `. ${p.tasting ?? p.short}`;
 const meats = boardMeats();
 const cheeses = boardCheeses();
 
@@ -117,7 +126,7 @@ export function BoardBuilder() {
                   <QtyOption
                     key={p.slug}
                     title={p.name}
-                    meta={p.weight}
+                    meta={`${p.weight} · ${p.short}`}
                     qty={sel.baseMeats[p.slug] ?? 0}
                     canAdd={baseMeatCount < BOARD_BASE_MEAT_COUNT}
                     onChange={(q) => setCount("baseMeats", p.slug, q)}
@@ -149,7 +158,7 @@ export function BoardBuilder() {
                     />
                     <span className="option-title">{c.name}</span>
                     <span className="option-meta">
-                      {c.weight} · {c.short}
+                      {cheeseMeta(c)}
                     </span>
                   </label>
                 ))}
@@ -167,7 +176,7 @@ export function BoardBuilder() {
                   <QtyOption
                     key={p.slug}
                     title={p.name}
-                    meta={p.weight}
+                    meta={`${p.weight} · ${p.short}`}
                     qty={sel.meats[p.slug] ?? 0}
                     onChange={(q) => setCount("meats", p.slug, q)}
                   />
@@ -179,7 +188,7 @@ export function BoardBuilder() {
                   <QtyOption
                     key={c.slug}
                     title={c.name}
-                    meta={c.weight}
+                    meta={cheeseMeta(c)}
                     qty={sel.cheeses[c.slug] ?? 0}
                     onChange={(q) => setCount("cheeses", c.slug, q)}
                   />

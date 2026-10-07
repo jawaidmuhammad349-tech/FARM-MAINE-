@@ -5,7 +5,7 @@ import { BoardBuilder } from "./BoardBuilder";
 export const metadata: Metadata = {
   title: "Charcuterie Boards",
   description:
-    "Build a charcuterie board with two Brickhouse Farm meats and a cheese for $50, then add more meats, cheese, honey and almonds.",
+    "Build a charcuterie board with two Brickhouse Farm meats and a cheese for $50, then add more meats, cheese, sourdough crackers, honey and almonds.",
 };
 
 // Wording from brickhousefarmmaine.com, lightly edited for clarity.
@@ -17,7 +17,7 @@ const partners = [
   },
   {
     name: "Carr Valley Cheese",
-    text: "A La Valle, Wisconsin creamery behind our Marisa, Cardona and Creama Kasa.",
+    text: "A La Valle, Wisconsin creamery behind our Marisa and Cardona.",
   },
   {
     name: "Clock Shadow Creamery",
@@ -43,7 +43,8 @@ export default function BuildYourBoard() {
             <h1>Build your own board</h1>
             <p className="lead">
               Every board starts with two of our handcrafted meats and a cheese of your choice for $50. Then add whatever
-              else you like: more meats, extra cheese, raw Maine honey and sprouted almonds.
+              else you like: more meats, extra cheese, sea salt &amp; butter sourdough crackers, raw Maine honey and
+              sprouted almonds.
             </p>
           </div>
           <Photo name="board" className="ratio-4x3" priority sizes="(min-width: 860px) 50vw, 100vw" />

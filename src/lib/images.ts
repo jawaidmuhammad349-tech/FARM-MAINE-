@@ -24,7 +24,7 @@ export const images = {
   donkeys: img("donkeys.jpg", "Two donkeys looking into the camera"),
   turkey: img("turkey.jpg", "A curious turkey up close"),
   tractor: img("tractor.jpg", "An old red tractor among hollyhocks"),
-  board: img("board.jpg", "A Brickhouse Farm charcuterie board with cured meats, cheese, bread, almonds, honey and fruit spread"),
+  board: img("board.jpg", "A charcuterie board with cured meats, cheeses, sourdough crackers, almonds and honey"),
   curing: img("coppa.jpg", "A whole coppa cut in half, showing its marbling"),
   sliced: img("charcuterie-sliced.jpg", "Thinly sliced Brickhouse Farm charcuterie"),
 
@@ -41,7 +41,6 @@ export const images = {
   marisa: img("product-marisa.jpg", "A wedge of Carr Valley Marisa sheep's milk cheese"),
   cardona: img("product-cardona.jpg", "A wedge of Carr Valley Cardona goat cheese"),
   cheeseCurds: todo("Cheese curds photo coming soon", "White cheddar cheese curds"),
-  cremaKasa: img("product-creama-kasa.jpg", "A wedge of Carr Valley Creama Kasa cheese"),
   almonds: img("product-almonds.jpg", "A bag of Living Nutz Old World Italian Herb Almonds"),
   honey: todo("Honey photo coming soon", "A jar of raw Maine honey"),
   crackers: todo("Crackers photo coming soon", "Sourdough crackers"),

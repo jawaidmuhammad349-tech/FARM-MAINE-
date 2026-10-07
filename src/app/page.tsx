@@ -37,8 +37,8 @@ export default function Home() {
             <h2>Build your own board</h2>
             <p>
               Every board starts with two of our handcrafted meats and a cheese of your choice for{" "}
-              {formatPrice(BOARD_BASE_PRICE)}. Then make it yours: add more meats, extra cheese, raw Maine honey and
-              sprouted almonds.
+              {formatPrice(BOARD_BASE_PRICE)}. Then make it yours: add more meats, extra cheese, sourdough crackers, raw
+              Maine honey and sprouted almonds.
             </p>
             <Link href="/build-your-board" className="btn btn-primary">
               Start your board

@@ -77,13 +77,12 @@ The lettering is dark brown, so use the full logo on light backgrounds only.
 
 - **Photos still needed** (slots marked `todo` in `src/lib/images.ts`): BellaVitano (Sartori's images are on
   a.storyblok.com, which needs allowing), white cheddar cheese curds (Clock Shadow), honey, sourdough crackers.
-- **Sourdough crackers**: price and description (from the baker). Shown as "Coming soon" until priced.
 
 Products with `price: null` in `src/lib/catalog.ts` are listed as "Coming soon" and can't be added to the cart.
 
 ## Pricing rules (Build Your Own Board)
 
-- Base $50: any 2 meats (coppa, salami, lonza, culatello) and 1 cheese (any of the 5)
-- More meats +$20 each, more cheeses +$16 each
-- Local honey +$12, Living Nutz almonds +$10
+- Base $50: any 2 meats (coppa, salami, lonza, culatello) and 1 cheese (any of the 4)
+- More meats +$20 each, more cheeses +$12 each
+- Sourdough crackers +$10, local honey +$12, Living Nutz almonds +$10
 - Shipping: flat $15 per order, or free pickup (Buckfield, Portland, Lewiston, Augusta)
