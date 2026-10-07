@@ -24,6 +24,10 @@ const partners = [
     text: "The Wisconsin creamery behind our white cheddar cheese curds.",
   },
   {
+    name: "Harvest Moon Sourdough",
+    text: "Handcrafted in Buckfield, Maine, by a local homeschooling mom, baking wholesome artisan sourdough with care for her family and community.",
+  },
+  {
     name: "Living Nutz",
     text: "A Maine family-owned company producing organic, raw and sprouted nut snacks, dehydrated at low temperatures to preserve enzymes and nutrition.",
   },
@@ -70,7 +74,6 @@ export default function BuildYourBoard() {
               Because of this, everything comes in airtight packaging for you to unbox and assemble before your event.
               Everything is included except the utensils for spreading.
             </p>
-            <p>Supply is limited — once we sell out, we&rsquo;re out.</p>
           </div>
           <Photo name="sliced" className="ratio-4x3" sizes="(min-width: 860px) 50vw, 100vw" />
         </div>
