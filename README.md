@@ -33,7 +33,7 @@ Checkout uses **Stripe Checkout** (Stripe's hosted payment page: cards, Apple Pa
 
 1. The cart form (`src/app/actions.ts`, `submitOrder`) re-prices every item from the catalog on the server and
    creates a Checkout Session. Shipping orders add the $15 flat rate and Stripe collects the US address; pickup
-   orders carry the pickup location in the session metadata.
+   orders are picked up at the farm in Buckfield.
 2. After paying, the customer returns to `/order/success`, which confirms the payment with Stripe and clears the cart.
 3. Stripe calls `/api/stripe/webhook` (`checkout.session.completed` and `checkout.session.async_payment_succeeded`);
    the site then emails the full order to the farm.
@@ -109,4 +109,4 @@ Products with `price: null` in `src/lib/catalog.ts` are listed as "Coming soon" 
 - Base $50: any 2 meats (coppa, salami, lonza, culatello) and 1 cheese (any of the 4)
 - More meats +$20 each, more cheeses +$12 each
 - Sourdough crackers +$10, local honey +$12, Living Nutz almonds +$10
-- Shipping: flat $15 per order, or free pickup (Buckfield, Portland, Lewiston, Augusta)
+- Shipping: flat $15 per order, or free pickup at the farm in Buckfield

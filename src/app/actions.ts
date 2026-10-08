@@ -5,7 +5,7 @@ import type { CartItem } from "@/lib/cart-types";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { sendMail } from "@/lib/mail";
-import { pickupLocations } from "@/lib/site";
+import { pickupLocation } from "@/lib/site";
 import { getStripe, paymentsEnabled, toCents } from "@/lib/stripe";
 
 export type FormState = { ok: boolean; message: string; errors?: Record<string, string> };
@@ -75,8 +75,6 @@ export async function submitOrder(_prev: FormState, fd: FormData): Promise<FormS
   const fulfillment = fulfillmentOptions.find((f) => f.id === str(fd, "fulfillment"));
   // With online payment, Stripe collects the shipping address.
   if (!payOnline && fulfillment?.id === "ship" && !str(fd, "address")) errors.address = "Required for shipping";
-  if (fulfillment?.id === "pickup" && !pickupLocations.includes(str(fd, "pickupLocation")))
-    errors.pickupLocation = "Choose a pickup location";
 
   const lines = priceCart(str(fd, "cart"));
   if (lines.length === 0) errors.cart = "Your cart is empty";
@@ -118,7 +116,7 @@ export async function submitOrder(_prev: FormState, fd: FormData): Promise<FormS
           name: str(fd, "name").slice(0, 500),
           phone: str(fd, "phone").slice(0, 500),
           fulfillment: fulfillment?.id === "ship" ? "Ship" : "Pickup",
-          pickupLocation: fulfillment?.id === "pickup" ? str(fd, "pickupLocation") : "",
+          pickupLocation: fulfillment?.id === "pickup" ? pickupLocation : "",
           date: str(fd, "date").slice(0, 500),
           notes: str(fd, "notes").slice(0, 500),
         },
@@ -142,7 +140,7 @@ export async function submitOrder(_prev: FormState, fd: FormData): Promise<FormS
     `Email: ${str(fd, "email")}`,
     `Phone: ${str(fd, "phone") || "—"}`,
     `Fulfillment: ${fulfillment?.label}`,
-    fulfillment?.id === "ship" ? `Address: ${str(fd, "address")}` : `Pickup location: ${str(fd, "pickupLocation")}`,
+    fulfillment?.id === "ship" ? `Address: ${str(fd, "address")}` : `Pickup location: ${pickupLocation}`,
     `Preferred date: ${str(fd, "date") || "—"}`,
     "",
     ...lines.map(

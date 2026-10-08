@@ -7,7 +7,7 @@ import { itemPrice, useCart } from "@/components/CartProvider";
 import { Field } from "@/components/Field";
 import { Photo } from "@/components/Photo";
 import { describeBoard, formatPrice, fulfillmentOptions, getProduct } from "@/lib/catalog";
-import { pickupLocations } from "@/lib/site";
+import { site } from "@/lib/site";
 
 const initial: FormState = { ok: false, message: "" };
 
@@ -140,16 +140,9 @@ export function CartView({ payOnline }: { payOnline: boolean }) {
             </div>
           </fieldset>
           {fulfillment === "pickup" && (
-            <Field label="Pickup location" name="pickupLocation" required error={state.errors?.pickupLocation}>
-              <option value="" disabled>
-                Choose a location
-              </option>
-              {pickupLocations.map((l) => (
-                <option key={l} value={l}>
-                  {l}
-                </option>
-              ))}
-            </Field>
+            <p className="muted small" style={{ margin: 0 }}>
+              Pickup is at the farm, {site.address}. We&rsquo;ll be in touch to arrange a time.
+            </p>
           )}
           {fulfillment === "ship" &&
             (payOnline ? (

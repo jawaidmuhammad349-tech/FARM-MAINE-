@@ -38,7 +38,7 @@ export default async function OrderSuccess({ searchParams }: PageProps<"/order/s
             </p>
             <p>
               {session.metadata?.fulfillment === "Pickup"
-                ? `We'll be in touch to confirm your pickup time at ${session.metadata?.pickupLocation || "your chosen location"}.`
+                ? "We'll be in touch to arrange your pickup time at the farm."
                 : "We'll be in touch when your order ships."}{" "}
               Questions? Email <a href={`mailto:${site.email}`}>{site.email}</a> or call{" "}
               <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`}>{site.phone}</a>.

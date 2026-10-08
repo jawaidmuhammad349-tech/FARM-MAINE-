@@ -13,7 +13,8 @@ export const site = {
 
 export const retailers = ["Monte's Fine Foods", "Mancini's Italian Deli"];
 
-export const pickupLocations = ["The farm in Buckfield", "Portland", "Lewiston", "Augusta"];
+// Orders are picked up at the farm only.
+export const pickupLocation = "The farm in Buckfield";
 
 export const nav = [
   { href: "/", label: "Home" },

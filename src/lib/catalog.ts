@@ -311,7 +311,7 @@ export function describeBoard(sel: BoardSelection) {
 export const SHIPPING_FLAT_RATE = 15;
 
 export const fulfillmentOptions = [
-  { id: "pickup", label: "Pick up", cost: 0 },
+  { id: "pickup", label: "Pick up at the farm", cost: 0 },
   { id: "ship", label: "Ship to me", cost: SHIPPING_FLAT_RATE },
 ] as const;
 
