@@ -2,8 +2,11 @@
 
 import { boardBreakdown, describeBoard, formatPrice, fulfillmentOptions, getProduct, normalizeSelection } from "@/lib/catalog";
 import type { CartItem } from "@/lib/cart-types";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { sendMail } from "@/lib/mail";
 import { pickupLocations } from "@/lib/site";
+import { getStripe, paymentsEnabled, toCents } from "@/lib/stripe";
 
 export type FormState = { ok: boolean; message: string; errors?: Record<string, string> };
 
@@ -28,39 +31,109 @@ async function deliver(subject: string, text: string, replyTo: string, success: 
   }
 }
 
-export async function submitOrder(_prev: FormState, fd: FormData): Promise<FormState> {
-  const errors = requireFields(fd, ["name", "email", "fulfillment"]);
-  const fulfillment = fulfillmentOptions.find((f) => f.id === str(fd, "fulfillment"));
-  if (fulfillment?.id === "ship" && !str(fd, "address")) errors.address = "Required for shipping";
-  if (fulfillment?.id === "pickup" && !pickupLocations.includes(str(fd, "pickupLocation")))
-    errors.pickupLocation = "Choose a pickup location";
+type OrderLine = { name: string; description?: string; unitPrice: number; qty: number };
 
+// Rebuilds the cart from the catalog so prices never come from the browser.
+function priceCart(raw: string): OrderLine[] {
   let items: CartItem[] = [];
   try {
-    items = JSON.parse(str(fd, "cart") || "[]");
+    items = JSON.parse(raw || "[]");
   } catch {}
-  if (!Array.isArray(items) || items.length === 0) errors.cart = "Your cart is empty";
-  if (Object.keys(errors).length) return { ok: false, message: "Please check the highlighted fields.", errors };
-
-  // Recalculate prices on the server from the catalog.
-  const lines: string[] = [];
-  let subtotal = 0;
+  if (!Array.isArray(items)) return [];
+  const lines: OrderLine[] = [];
   for (const item of items) {
     if (!item || typeof item !== "object") continue;
     const qty = Math.max(1, Math.min(99, Math.floor(Number(item.qty) || 1)));
     if (item.kind === "product") {
       const p = getProduct(item.slug);
       if (!p || p.price === null) continue;
-      subtotal += p.price * qty;
-      lines.push(`${qty} × ${p.name} (${p.weight}) — ${formatPrice(p.price * qty)}`);
+      lines.push({ name: p.weight ? `${p.name} (${p.weight})` : p.name, unitPrice: p.price, qty });
     } else if (item.kind === "board") {
       const selection = normalizeSelection(item.selection);
-      const { total } = boardBreakdown(selection);
-      subtotal += total * qty;
-      lines.push(`${qty} × Custom board — ${formatPrice(total * qty)}\n    ${describeBoard(selection)}`);
+      lines.push({
+        name: "Custom charcuterie board",
+        description: describeBoard(selection),
+        unitPrice: boardBreakdown(selection).total,
+        qty,
+      });
     }
   }
+  return lines;
+}
+
+async function siteOrigin() {
+  if (process.env.SITE_URL) return process.env.SITE_URL.replace(/\/$/, "");
+  const h = await headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
+  const proto = h.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
+  return `${proto}://${host}`;
+}
+
+export async function submitOrder(_prev: FormState, fd: FormData): Promise<FormState> {
+  const payOnline = paymentsEnabled();
+  const errors = requireFields(fd, ["name", "email", "fulfillment"]);
+  const fulfillment = fulfillmentOptions.find((f) => f.id === str(fd, "fulfillment"));
+  // With online payment, Stripe collects the shipping address.
+  if (!payOnline && fulfillment?.id === "ship" && !str(fd, "address")) errors.address = "Required for shipping";
+  if (fulfillment?.id === "pickup" && !pickupLocations.includes(str(fd, "pickupLocation")))
+    errors.pickupLocation = "Choose a pickup location";
+
+  const lines = priceCart(str(fd, "cart"));
+  if (lines.length === 0) errors.cart = "Your cart is empty";
+  if (Object.keys(errors).length) return { ok: false, message: "Please check the highlighted fields.", errors };
+
   const shipping = fulfillment?.cost ?? 0;
+  const subtotal = lines.reduce((a, l) => a + l.unitPrice * l.qty, 0);
+
+  if (payOnline) {
+    let checkoutUrl: string | null = null;
+    try {
+      const origin = await siteOrigin();
+      const session = await getStripe().checkout.sessions.create({
+        mode: "payment",
+        customer_email: str(fd, "email"),
+        line_items: lines.map((l) => ({
+          quantity: l.qty,
+          price_data: {
+            currency: "usd",
+            unit_amount: toCents(l.unitPrice),
+            product_data: { name: l.name, ...(l.description ? { description: l.description.slice(0, 500) } : {}) },
+          },
+        })),
+        ...(fulfillment?.id === "ship"
+          ? {
+              shipping_address_collection: { allowed_countries: ["US"] },
+              shipping_options: [
+                {
+                  shipping_rate_data: {
+                    type: "fixed_amount",
+                    display_name: "Flat-rate shipping",
+                    fixed_amount: { amount: toCents(shipping), currency: "usd" },
+                  },
+                },
+              ],
+            }
+          : {}),
+        metadata: {
+          name: str(fd, "name").slice(0, 500),
+          phone: str(fd, "phone").slice(0, 500),
+          fulfillment: fulfillment?.id === "ship" ? "Ship" : "Pickup",
+          pickupLocation: fulfillment?.id === "pickup" ? str(fd, "pickupLocation") : "",
+          date: str(fd, "date").slice(0, 500),
+          notes: str(fd, "notes").slice(0, 500),
+        },
+        success_url: `${origin}/order/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${origin}/cart`,
+      });
+      checkoutUrl = session.url;
+    } catch (err) {
+      console.error("Stripe checkout failed", err);
+    }
+    if (!checkoutUrl) {
+      return { ok: false, message: "We couldn't open the secure checkout. Please try again, or contact us to order." };
+    }
+    redirect(checkoutUrl); // outside the try: redirect() works by throwing
+  }
 
   const text = [
     "New order request from the website",
@@ -72,7 +145,9 @@ export async function submitOrder(_prev: FormState, fd: FormData): Promise<FormS
     fulfillment?.id === "ship" ? `Address: ${str(fd, "address")}` : `Pickup location: ${str(fd, "pickupLocation")}`,
     `Preferred date: ${str(fd, "date") || "—"}`,
     "",
-    ...lines,
+    ...lines.map(
+      (l) => `${l.qty} × ${l.name} — ${formatPrice(l.unitPrice * l.qty)}${l.description ? `\n    ${l.description}` : ""}`
+    ),
     "",
     `Subtotal: ${formatPrice(subtotal)}`,
     `Shipping: ${formatPrice(shipping)}`,

@@ -11,7 +11,7 @@ import { pickupLocations } from "@/lib/site";
 
 const initial: FormState = { ok: false, message: "" };
 
-export function CartView() {
+export function CartView({ payOnline }: { payOnline: boolean }) {
   const { items, ready, subtotal, setQty, remove, clear } = useCart();
   const [state, action, pending] = useActionState(submitOrder, initial);
   const [fulfillment, setFulfillment] = useState<string>(fulfillmentOptions[0].id);
@@ -109,10 +109,11 @@ export function CartView() {
       </div>
 
       <div className="card">
-        <h2 style={{ fontSize: "1.6rem" }}>Request your order</h2>
+        <h2 style={{ fontSize: "1.6rem" }}>{payOnline ? "Checkout" : "Request your order"}</h2>
         <p className="muted small">
-          Online payment is coming soon. For now, send us your order request and we&rsquo;ll confirm availability,
-          delivery and payment with you directly.
+          {payOnline
+            ? "Enter your details, then pay securely by card, Apple Pay or Google Pay on the next page (powered by Stripe)."
+            : "Send us your order request and we\u2019ll confirm availability, delivery and payment with you directly."}
         </p>
         <form action={action} className="form-grid">
           <input type="hidden" name="cart" value={JSON.stringify(items)} />
@@ -150,13 +151,22 @@ export function CartView() {
               ))}
             </Field>
           )}
-          {fulfillment === "ship" && (
-            <Field label="Shipping address" name="address" textarea required error={state.errors?.address} />
-          )}
+          {fulfillment === "ship" &&
+            (payOnline ? (
+              <p className="muted small" style={{ margin: 0 }}>
+                You&rsquo;ll enter your shipping address on the payment page.
+              </p>
+            ) : (
+              <Field label="Shipping address" name="address" textarea required error={state.errors?.address} />
+            ))}
           <Field label="Preferred pickup / delivery date" name="date" type="date" />
           <Field label="Notes" name="notes" textarea placeholder="Occasion, allergies, anything we should know" />
           <button className="btn btn-primary" disabled={pending}>
-            {pending ? "Sending…" : `Send order request — ${formatPrice(subtotal + shipping)}`}
+            {pending
+              ? payOnline
+                ? "Opening secure checkout…"
+                : "Sending…"
+              : `${payOnline ? "Continue to payment" : "Send order request"} — ${formatPrice(subtotal + shipping)}`}
           </button>
           {state.message && (
             <p className="form-status err" role="alert">

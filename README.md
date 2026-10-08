@@ -27,20 +27,38 @@ npm run build   # production build
 npm run lint
 ```
 
-## Orders and forms
+## Orders and payments
 
-There is no online payment yet. The cart, meat-share enquiry and contact forms submit via Server Actions
-(`src/app/actions.ts`), which email the details to the farm. Prices are recalculated on the server from
-the catalog, not taken from the browser.
+Checkout uses **Stripe Checkout** (Stripe's hosted payment page: cards, Apple Pay, Google Pay).
 
-Email is sent through [Resend](https://resend.com) when these environment variables are set (see
-`.env.example`):
+1. The cart form (`src/app/actions.ts`, `submitOrder`) re-prices every item from the catalog on the server and
+   creates a Checkout Session. Shipping orders add the $15 flat rate and Stripe collects the US address; pickup
+   orders carry the pickup location in the session metadata.
+2. After paying, the customer returns to `/order/success`, which confirms the payment with Stripe and clears the cart.
+3. Stripe calls `/api/stripe/webhook` (`checkout.session.completed` and `checkout.session.async_payment_succeeded`);
+   the site then emails the full order to the farm.
+
+Environment variables (see `.env.example`):
+
+- `STRIPE_SECRET_KEY`: Stripe secret key (`sk_test_...` for testing, `sk_live_...` when live)
+- `STRIPE_WEBHOOK_SECRET`: signing secret of the webhook endpoint (`whsec_...`)
+- `SITE_URL` (optional): public site URL used for Stripe's return links
+
+Without `STRIPE_SECRET_KEY` the cart falls back to emailing an order request instead of taking payment. The cart
+page reads this at build time, so redeploy after adding or changing the key.
+
+Webhook setup: in the Stripe Dashboard, add an endpoint for `https://<site>/api/stripe/webhook` with the two
+events above, then copy its signing secret into `STRIPE_WEBHOOK_SECRET`.
+
+### Email
+
+Order, meat-share and contact emails are sent through [Resend](https://resend.com) when these are set:
 
 - `RESEND_API_KEY`: Resend API key
-- `ORDER_EMAIL_TO`: where requests go (comma-separated for several addresses)
+- `ORDER_EMAIL_TO`: where messages go (comma-separated for several addresses)
 - `ORDER_EMAIL_FROM`: verified sender, e.g. `Brickhouse Farm <orders@brickhousefarmmaine.com>`
 
-Without them, messages are printed to the server console, so everything still works locally.
+Without them, messages are printed to the server log. Stripe also keeps every paid order in its Dashboard.
 
 ## Content
 

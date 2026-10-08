@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { paymentsEnabled } from "@/lib/stripe";
 import { CartView } from "./CartView";
 
 export const metadata: Metadata = {
@@ -17,7 +18,7 @@ export default function CartPage() {
       </section>
       <section className="section" style={{ paddingTop: "1.5rem" }}>
         <div className="container">
-          <CartView />
+          <CartView payOnline={paymentsEnabled()} />
         </div>
       </section>
     </>
