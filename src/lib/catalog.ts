@@ -229,7 +229,7 @@ export type AddOn = { id: string; name: string; price: number; note: string };
 export const addOns: AddOn[] = [
   { id: "honey", name: "Local honey", price: 12, note: "Raw, unfiltered Maine honey from Buckfield" },
   { id: "almonds", name: "Living Nutz almonds", price: 10, note: "Organic sprouted almonds from a Maine family company" },
-  { id: "crackers", name: "Sourdough crackers", price: 10, note: "Sea salt & butter sourdough crackers, 5 oz" },
+  { id: "crackers", name: "Sourdough crackers", price: 10, note: "Sea salt sourdough crackers, 5 oz" },
 ];
 
 export type BoardSelection = {

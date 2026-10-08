@@ -47,7 +47,7 @@ export default function BuildYourBoard() {
             <h1>Build your own board</h1>
             <p className="lead">
               Every board starts with two of our handcrafted meats and a cheese of your choice for $50. Then add whatever
-              else you like: more meats, extra cheese, sea salt &amp; butter sourdough crackers, raw Maine honey and
+              else you like: more meats, extra cheese, sea salt sourdough crackers, raw Maine honey and
               sprouted almonds.
             </p>
           </div>

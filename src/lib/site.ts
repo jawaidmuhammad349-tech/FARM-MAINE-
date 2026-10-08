@@ -11,7 +11,7 @@ export const site = {
   directions: "https://www.google.com/maps/search/?api=1&query=415+Paris+Hill+Road+Buckfield+Maine+04220",
 };
 
-export const retailers = ["Lewiston Farmers Market", "Monte's Fine Foods", "Mancini's Italian Deli"];
+export const retailers = ["Monte's Fine Foods", "Mancini's Italian Deli"];
 
 export const pickupLocations = ["The farm in Buckfield", "Portland", "Lewiston", "Augusta"];
 
