@@ -25,6 +25,7 @@ export function CartView({ payOnline }: { payOnline: boolean }) {
       <div className="empty-state">
         <h2>Order request sent</h2>
         <p>{state.message}</p>
+        <p className="muted small">A copy of your order is on its way to your email.</p>
         <Link href="/shop" className="btn btn-primary">
           Back to the shop
         </Link>

@@ -5,6 +5,7 @@ import type { CartItem } from "@/lib/cart-types";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { sendMail } from "@/lib/mail";
+import { sendCustomerConfirmation } from "@/lib/order-email";
 import { pickupLocation } from "@/lib/site";
 import { getStripe, paymentsEnabled, toCents } from "@/lib/stripe";
 
@@ -156,12 +157,32 @@ export async function submitOrder(_prev: FormState, fd: FormData): Promise<FormS
     .filter((l) => l !== "")
     .join("\n");
 
-  return deliver(
+  const result = await deliver(
     `Order request — ${str(fd, "name")}`,
     text,
     str(fd, "email"),
     "Thank you! Your order request has been sent. We'll be in touch shortly to confirm details and payment."
   );
+  if (!result.ok) return result;
+
+  try {
+    await sendCustomerConfirmation({
+      email: str(fd, "email"),
+      name: str(fd, "name"),
+      paid: false,
+      lines: lines.map((l) => ({ qty: l.qty, name: l.name, amount: l.unitPrice * l.qty, detail: l.description })),
+      subtotal,
+      shipping,
+      total: subtotal + shipping,
+      ship: fulfillment?.id === "ship",
+      address: str(fd, "address"),
+      date: str(fd, "date"),
+      notes: str(fd, "notes"),
+    });
+  } catch (err) {
+    console.error("Customer confirmation email failed", err);
+  }
+  return result;
 }
 
 export async function submitShareEnquiry(_prev: FormState, fd: FormData): Promise<FormState> {

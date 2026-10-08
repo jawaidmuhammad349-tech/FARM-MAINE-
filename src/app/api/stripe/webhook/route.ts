@@ -1,6 +1,7 @@
 import type Stripe from "stripe";
 import { formatPrice } from "@/lib/catalog";
 import { sendMail } from "@/lib/mail";
+import { sendCustomerConfirmation } from "@/lib/order-email";
 import { fromCents, getStripe } from "@/lib/stripe";
 
 // Stripe calls this when a checkout completes. We email the order to the farm.
@@ -51,11 +52,14 @@ async function emailOrder(session: Stripe.Checkout.Session) {
         .join(", ")
     : "";
 
-  const lines = lineItems.data.map((li) => {
+  const items = lineItems.data.map((li) => {
     const product = li.price?.product;
     const detail = product && typeof product === "object" && "description" in product ? product.description : null;
-    return `${li.quantity} × ${li.description} — ${formatPrice(fromCents(li.amount_total))}${detail ? `\n    ${detail}` : ""}`;
+    return { qty: li.quantity ?? 1, name: li.description ?? "Item", amount: fromCents(li.amount_total), detail };
   });
+  const lines = items.map(
+    (l) => `${l.qty} × ${l.name} — ${formatPrice(l.amount)}${l.detail ? `\n    ${l.detail}` : ""}`
+  );
 
   const text = [
     "New paid order from the website",
@@ -82,4 +86,26 @@ async function emailOrder(session: Stripe.Checkout.Session) {
     text,
     replyTo: customer?.email ?? undefined,
   });
+
+  // The farm has the order; a failed customer email shouldn't make Stripe
+  // retry and send the farm a duplicate.
+  const email = customer?.email ?? session.customer_email;
+  if (!email) return;
+  try {
+    await sendCustomerConfirmation({
+      email,
+      name: meta.name || customer?.name || "",
+      paid: true,
+      lines: items,
+      subtotal: fromCents(session.amount_subtotal),
+      shipping: fromCents(session.shipping_cost?.amount_total),
+      total: fromCents(session.amount_total),
+      ship: meta.fulfillment === "Ship",
+      address,
+      date: meta.date,
+      notes: meta.notes,
+    });
+  } catch (err) {
+    console.error("Customer confirmation email failed", err);
+  }
 }

@@ -58,6 +58,9 @@ Order, meat-share and contact emails are sent through [Resend](https://resend.co
 - `ORDER_EMAIL_TO`: where messages go (comma-separated for several addresses)
 - `ORDER_EMAIL_FROM`: verified sender, e.g. `Brickhouse Farm <orders@brickhousefarmmaine.com>`
 
+Customers also get an order confirmation (`src/lib/order-email.ts`): from the webhook for paid orders, or
+straight away for emailed order requests. Replies go to the farm's email address.
+
 Without them, messages are printed to the server log. Stripe also keeps every paid order in its Dashboard.
 
 ## Content

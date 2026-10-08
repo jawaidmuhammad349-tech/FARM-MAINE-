@@ -33,8 +33,8 @@ export default async function OrderSuccess({ searchParams }: PageProps<"/order/s
             <p className="eyebrow">Order confirmed</p>
             <h1>Thank you!</h1>
             <p className="lead">
-              We&rsquo;ve received your payment of {formatPrice(fromCents(session.amount_total))}. A receipt is on its
-              way to {session.customer_details?.email ?? "your email"}.
+              We&rsquo;ve received your payment of {formatPrice(fromCents(session.amount_total))}. An order
+              confirmation is on its way to {session.customer_details?.email ?? "your email"}.
             </p>
             <p>
               {session.metadata?.fulfillment === "Pickup"
