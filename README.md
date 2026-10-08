@@ -96,6 +96,12 @@ The lettering is dark brown, so use the full logo on light backgrounds only.
 - **Photos still needed** (slots marked `todo` in `src/lib/images.ts`): BellaVitano (Sartori's images are on
   a.storyblok.com, which needs allowing), white cheddar cheese curds (Clock Shadow), honey, sourdough crackers.
 
+### Old site links
+
+`next.config.ts` redirects addresses from the old GoDaddy site (store products and categories, `/products`,
+weddings, account pages, terms and privacy) to the matching new pages, so search results and shared links keep
+working.
+
 Products with `price: null` in `src/lib/catalog.ts` are listed as "Coming soon" and can't be added to the cart.
 
 ## Pricing rules (Build Your Own Board)
